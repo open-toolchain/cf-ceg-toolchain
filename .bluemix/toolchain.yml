@@ -70,7 +70,19 @@ services:
       name: Tools, Practices, Courses
       dashboard_url: https://whitewater.ibm.com/
       description: Equip product and service teams with practical resources so they can get to better outcomes, faster.
-      additional-properties:     
+      additional-properties:
+  servicecontract:
+    service_id: customtool
+    parameters:
+      type: Watson Cloud Service Contract
+      lifecyclePhase: "CULTURE"
+      imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
+      documentationUrl: https://pages.github.ibm.com/CloudEngineering/service_contract/
+      name: Cloud Service Contract
+      dashboard_url: https://pages.github.ibm.com/the-playbook/index.html
+      description: 
+        $ref: "#/messages/sc.toolDescription"
+      additional-properties:
 form:
   pipeline:
     parameters:
