@@ -78,7 +78,7 @@ services:
       lifecyclePhase: "CULTURE"
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
       documentationUrl: https://pages.github.ibm.com/CloudEngineering/service_contract/
-      name: Cloud Service Contract
+      name: Service Contract
       dashboard_url: https://pages.github.ibm.com/the-playbook/index.html
       description: 
         $ref: "#/messages/sc.toolDescription"
