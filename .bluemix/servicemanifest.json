@@ -19,11 +19,11 @@
             "type": "string"
         },
         "service-name": {
-            "description": "Name of the offering in the Bluemix Catalog this application belongs to",
+            "description": "Name of the offering hosting the service",
             "type": "string"
         },
         "component-name": {
-            "description": "Name of the component being deployed",
+            "description": "Name of the deployed service",
             "type": "string"
         },
         "bailey-project": {
@@ -35,7 +35,7 @@
             "type": "string"
         },
         "customer-tickets": {
-            "description": "URL to the customer ticket repository",
+            "description": "URL where customer tickets are opened",
             "type": "string"
         }
     },
@@ -57,13 +57,13 @@
         {
             "type": "text",
             "readonly": false,
-            "title": "Offering Name",
+            "title": "Name of catalog offering hosting the service",
             "key": "service-name"
         },
         {
             "type": "text",
             "readonly": false,
-            "title": "Component Name",
+            "title": "Name of the component ( may be different from application name )",
             "key": "component-name"
         },
         {
