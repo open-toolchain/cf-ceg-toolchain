@@ -50,6 +50,13 @@ services:
           PROD_SPACE_NAME: '{{form.pipeline.parameters.prod-space}}'
           PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
+          MANIFEST_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
+          SERVICE_NAME: '{{form.pipeline.parameters.manifest-service-name}}'
+          COMPONENT_NAME: '{{form.pipeline.parameters.prod-app-name}}'
+          BAILEY_URL: '{{manifest-bailey-project}}'
+          PAGER_DUTY_URL: '{{form.pipeline.parameters.manifest-pager-duty}}'
+          CUSTOMER_TICKET_URL: '{{form.pipeline.parameters.manifest-customer-tickets}}'          
+          CTYPE: '{{form.pipeline.parameters.manifest-application-type}}'
         execute: true
   webide:
     service_id: orion
@@ -83,28 +90,6 @@ services:
       description: 
         $ref: "#/messages/sc.toolDescription"
       additional-properties:
-  servicemanifest:
-    service_id: pipeline
-    parameters:
-      services:
-        - sample-repo
-      name: manifest-creation
-      ui-pipeline: true
-      configuration:
-        content:
-          $ref: manifest.yml
-          $refType: text
-        env:
-          SAMPLE_REPO: sample-repo
-          MANIFEST_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
-          CF_APP_NAME: '{{form.pipeline.parameters.prod-app-name}}'
-          STAGING_SPACE_NAME: '{{form.pipeline.parameters.staging-space}}'
-          STAGING_ORG_NAME: '{{form.pipeline.parameters.staging-organization}}'
-          STAGING_REGION_ID: '{{form.pipeline.parameters.staging-region}}'          
-          PROD_SPACE_NAME: '{{form.pipeline.parameters.prod-space}}'
-          PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
-          PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
-        execute: true
 form:
   pipeline:
     parameters:
