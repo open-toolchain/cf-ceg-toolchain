@@ -88,14 +88,15 @@ services:
     parameters:
       services:
         - sample-repo
-      name: '{{services.sample-repo.parameters.repo_name}}'
+      name: manifest-creation
       ui-pipeline: true
       configuration:
         content:
-          $ref: pipeline.yml
+          $ref: manifest.yml
           $refType: text
         env:
           SAMPLE_REPO: sample-repo
+          MANIFEST_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
           CF_APP_NAME: '{{form.pipeline.parameters.prod-app-name}}'
           STAGING_SPACE_NAME: '{{form.pipeline.parameters.staging-space}}'
           STAGING_ORG_NAME: '{{form.pipeline.parameters.staging-organization}}'
@@ -112,16 +113,6 @@ form:
       prod-region: ibm:yp:us-south
       prod-space: prod
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
+      manifest-service-name: '{{toolchain.name}}'
     schema:
       $ref: deploy.json
-  servicemanifest:
-    parameters:
-      type: Manifest
-      name: Service Manifest
-      imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
-      documentationUrl: https://github.ibm.com/CloudTools/manifest-runtime-production
-      description: Service Contract maniest document
-      component-name: '{{form.pipeline.parameters.prod-app-name}}'
-      manifest-repo: https://github.ibm.com/CloudTools/manifest-runtime-production
-    schema:
-      $ref: servicemanifest.json

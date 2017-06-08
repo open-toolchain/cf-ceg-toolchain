@@ -44,6 +44,26 @@
             },
             "type": "string",
             "pattern": "\\S"
+        },
+        "manifest-service-name": {
+            "description": "Name of the offering hosting the service",
+            "type": "string"
+        },
+        "manifest-bailey-project": {
+            "description": "Name of the project in the Bailey tool",
+            "type": "string"
+        },
+        "manifest-pager-duty": {
+            "description": "URL to PagerDuty escalation policy",
+            "type": "string"
+        },
+        "manifest-customer-tickets": {
+            "description": "URL where customer tickets are opened",
+            "type": "string"
+        },
+        "manifest-application-type": {
+            "description": "One of the following: public, dedicated or local",
+            "type": "string"
         }
     },
     "required": [
@@ -53,7 +73,11 @@
         "prod-region",
         "prod-organization",
         "prod-space",
-        "prod-app-name"
+        "prod-app-name",
+        "manifest-service-name",
+        "manifest-baliey-project",
+        "manifest-pager-duty",
+        "manifest-customer-tickets"
     ],
     "form": [
         {
@@ -138,6 +162,17 @@
                     "key": "prod-space",
                     "readonly": false
                 }
+            ]
+        },
+        {
+            "type": "section",
+            "description": "Service Manifest Static Fields.  These values will be the same for all instances of the application",
+            "items": [
+                "manifest-service-name",
+                "manifest-baliey-project",
+                "manifest-pager-duty",
+                "manifest-customer-tickets",
+                "manifest-application-type"
             ]
         }
     ]
