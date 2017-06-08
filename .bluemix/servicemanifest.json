@@ -76,7 +76,7 @@
             "type": "text",
             "readonly": false,
             "title": "Bailey project name",
-            "key": "baliey-project"
+            "key": "bailey-project"
         },
         {
             "type": "text",
