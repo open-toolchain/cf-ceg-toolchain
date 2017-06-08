@@ -71,7 +71,12 @@
         },
         "manifest-application-type": {
             "description": "One of the following: public, dedicated or local",
-            "type": "string"
+            "type": "string",
+            "enum": [
+                "public",
+                "dedicated",
+                "local"
+            ]
         }
     },
     "required": [
@@ -181,10 +186,19 @@
                     "description": "Service Manifest Static Fields.  These values will be the same for all instances of the application",
                     "items": [
                         "manifest-service-name",
-                        "manifest-baliey-project",
+                        "manifest-bailey-project",
                         "manifest-pager-duty",
                         "manifest-customer-tickets",
-                        "manifest-application-type"
+                        {
+                            "type": "selectfieldset",
+                            "key": "manifest-application-type",
+                            "titleMap": {
+                                "public": "public",
+                                "dedicated": "dedicated",
+                                "local": "local"
+                            }
+
+                        }
                     ]
                 },
                 {

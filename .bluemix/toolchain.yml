@@ -114,5 +114,6 @@ form:
       prod-space: prod
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
       manifest-service-name: '{{toolchain.name}}'
+      manifest-application-type: public
     schema:
       $ref: deploy.json
