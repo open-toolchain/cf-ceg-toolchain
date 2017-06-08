@@ -49,42 +49,6 @@
     ],
     "form": [
         {
-            "type": "text",
-            "readonly": true,
-            "title": "Manifest Runtime Production URL",
-            "key": "manifest-repo"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Offering Name",
-            "key": "service-name"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Component Name",
-            "key": "component-name"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Pager Duty Escalation Policy",
-            "key": "pager-duty"
-        },
-        { 
-            "type": "text",
-            "readonly": false,
-            "title": "Bailey Project",
-            "key": "bailey-project"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Customer Ticket URL",
-            "key": "customer-tickets"
-        },
-        {
             "type": "section",
             "description": "Manifest static information",
             "items": [
