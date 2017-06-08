@@ -97,6 +97,7 @@ form:
   servicemanifest:
     service_id: customtool
     parameters:
+      type: Service Manifest creation
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
       documentationUrl: https://github.ibm.com/CloudTools/manifest-runtime-production
       description: Service Contract maniest document
