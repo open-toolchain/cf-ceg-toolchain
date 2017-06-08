@@ -94,8 +94,10 @@ form:
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
     schema:
       $ref: deploy.json
-  customtool:
+  servicemanifest:
+    service_id: customtool
     parameters:
+      type: Manifest
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
       documentationUrl: https://github.ibm.com/CloudTools/manifest-runtime-production
       description: Service Contract manifest document
