@@ -1,0 +1,217 @@
+---
+stages:
+- name: BUILD
+  inputs:
+  - type: git
+    branch: master
+    service: ${SAMPLE_REPO}
+  triggers:
+  - type: commit
+  properties:
+  - name: LOGICAL_APP_NAME
+    value: ${CF_APP_NAME}
+    type: text
+  - name: BUILD_PREFIX
+    value: master
+    type: text
+  jobs:
+  - name: Build
+    type: builder
+- name: STAGING
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build
+  triggers:
+  - type: stage
+  properties:
+  - name: CF_APP_NAME
+    value: undefined
+    type: text
+  - name: APP_URL
+    value: undefined
+    type: text
+  - name: LOGICAL_APP_NAME
+    value: ${CF_APP_NAME}
+    type: text
+  - name: LOGICAL_ENV_NAME
+    value: STAGING
+    type: text
+  - name: BUILD_PREFIX
+    value: master
+    type: text
+  jobs:
+  - name: Rolling Deploy
+    type: deployer
+    target:
+      region_id: ${STAGING_REGION_ID}
+      organization: ${STAGING_ORG_NAME}
+      space: ${STAGING_SPACE_NAME}
+      application: ${CF_APP_NAME}
+    script: |
+      #!/bin/bash
+      # Push app
+      export CF_APP_NAME="$CF_APP-staging"
+      if ! cf app $CF_APP_NAME; then  
+        cf push $CF_APP_NAME
+      else
+        old_cf_app_name=${CF_APP_NAME}-OLD-$(date +"%s")
+        rollback() {
+          set +e  
+          if cf app $old_cf_app_name; then
+            cf logs $CF_APP_NAME --recent
+            cf delete $CF_APP_NAME -f
+            cf rename $old_cf_app_name $CF_APP_NAME
+          fi
+          exit 1
+        }
+        set -e
+        trap rollback ERR
+        cf rename $CF_APP_NAME $old_cf_app_name
+        cf push $CF_APP_NAME
+        cf delete $old_cf_app_name -f
+      fi
+      # Export app name and URL for use in later Pipeline jobs
+      export APP_URL=http://$(cf app $CF_APP_NAME | grep urls: | awk '{print $2}')
+      # View logs
+      #cf logs "${CF_APP}" --recent
+- name: PROD
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build
+  triggers:
+  - type: stage
+  properties:
+  - name: CF_APP_NAME
+    value: undefined
+    type: text
+  - name: APP_URL
+    value: undefined
+    type: text
+  - name: LOGICAL_APP_NAME
+    value: ${CF_APP_NAME}
+    type: text
+  - name: LOGICAL_ENV_NAME
+    value: PRODUCTION
+    type: text
+  - name: BUILD_PREFIX
+    value: master
+    type: text
+  - name: TEMP_APP_NAME
+    value: ''
+    type: text
+  - name: TEMP_APP_URL
+    value: ''
+    type: text
+  - name: DOMAIN
+    value: ''
+    type: text    
+  jobs:
+  - name: Deploy Dark
+    type: deployer
+    target:
+      region_id: ${PROD_REGION_ID}
+      organization: ${PROD_ORG_NAME}
+      space: ${PROD_SPACE_NAME}
+      application: ${CF_APP_NAME}
+    script: |-      
+      #!/bin/bash
+      #set -x
+      #CF_TRACE=true
+      # Compute a unique app name using the reserved CF_APP name (configured in the 
+      # deployer or from the manifest.yml file), the build number, and a 
+      # timestamp (allowing multiple deploys for the same build).
+      export CF_APP_NAME="${CF_APP}"
+      export TEMP_APP_NAME="${CF_APP_NAME}-${BUILD_NUMBER}-$(date +%s)"
+      echo "Pushing new app:$TEMP_APP_NAME"
+      cf push $TEMP_APP_NAME --no-start
+      # cf set-env $TEMP_APP_NAME some_variable some_value
+      cf start $TEMP_APP_NAME
+      cf apps | grep $TEMP_APP_NAME
+      url=$(cf app $TEMP_APP_NAME | grep urls: | awk '{print $2}')
+      prefix="${TEMP_APP_NAME}."
+      export DOMAIN=$( echo ${url:${#prefix}} )
+      export TEMP_APP_URL="http://$url"
+      echo "##############################################################"
+      echo "Deployed new app $TEMP_APP_NAME"
+      echo "on temporary route: $TEMP_APP_URL"
+      echo "##############################################################"
+      # View logs
+      #cf logs "${TEMP_APP_NAME}" --recent
+  - name: Sanity Check
+    type: deployer
+    target:
+      region_id: ${PROD_REGION_ID}
+      organization: ${PROD_ORG_NAME}
+      space: ${PROD_SPACE_NAME}
+      application: ${CF_APP_NAME}
+    script: |
+      #!/bin/bash
+      #set -x
+      #CF_TRACE=true
+      max_health_checks=20
+      expected_response="200"
+      echo "Check that the new app is ready to serve..."
+      iterations=0
+      while [[ "${iterations}" -lt "${max_health_checks}" ]]
+      do
+        response=$(curl -sIL -w "%{http_code}" -o /dev/null "${TEMP_APP_URL}")
+        if [[ "${response}" == "${expected_response}" ]]; then
+          echo "Got expected ${response} response"
+          break
+        else
+          iterations=$(( iterations + 1 ))
+          sleep 3
+          echo "Waiting for ${expected_response} response... Got ${response} (${iterations}/${max_health_checks})"
+        fi
+      done
+      if [[ "${iterations}" == "${max_health_checks}" ]]; then
+        echo "Couldn't get ${expected_response} response. Reverting..."
+        # Delete temporary route
+        cf delete-route $DOMAIN -n $TEMP_APP_NAME -f
+        # Stop temporary app
+        cf stop $TEMP_APP_NAME
+        exit 1
+      fi
+      echo "##############################################################"
+      echo "Sanity checked new app $TEMP_APP_NAME"
+      echo "on temporary route: $TEMP_APP_URL"
+      echo "##############################################################"
+  - name: Roll Out
+    type: deployer
+    target:
+      region_id: ${PROD_REGION_ID}
+      organization: ${PROD_ORG_NAME}
+      space: ${PROD_SPACE_NAME}
+      application: ${CF_APP_NAME}
+    script: |-
+      #!/bin/bash
+      #set -x
+      #CF_TRACE=true
+      cf app $TEMP_APP_NAME
+      # Map traffic to the new version by binding to the public host.
+      # NOTE: The old version(s) is still taking traffic to avoid disruption in service.
+      cf map-route $TEMP_APP_NAME $DOMAIN -n $CF_APP_NAME
+      cf routes | { grep $TEMP_APP_NAME || true; }
+
+      # Delete the temporary route that was used for testing since it is no longer needed.
+      cf unmap-route $TEMP_APP_NAME $DOMAIN -n $TEMP_APP_NAME
+      cf delete-route $DOMAIN -n $TEMP_APP_NAME -f
+
+      # Delete the old app at this point. They are no longer needed.
+      cf delete -f -r $CF_APP_NAME
+
+      # Rename temp app now it is public
+      cf rename $TEMP_APP_NAME $CF_APP_NAME
+
+      echo "Public route bindings:"
+      cf routes | { grep $CF_APP_NAME || true; }
+      cf app $CF_APP_NAME
+      export APP_URL=http://$(cf app $CF_APP_NAME | grep urls: | awk '{print $2}')
+      echo "##############################################################"
+      echo "You have successfully executed a rolling deployment of $CF_APP_NAME"
+      echo "at: $APP_URL"
+      echo "##############################################################"
+      # View logs
+      #cf logs "${CF_APP_NAME}" --recent      
