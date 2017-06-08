@@ -189,16 +189,7 @@
                         "manifest-bailey-project",
                         "manifest-pager-duty",
                         "manifest-customer-tickets",
-                        {
-                            "type": "selectfieldset",
-                            "key": "manifest-application-type",
-                            "titleMap": {
-                                "public": "public",
-                                "dedicated": "dedicated",
-                                "local": "local"
-                            }
-
-                        }
+                        "manifest-application-type"
                     ]
                 },
                 {
