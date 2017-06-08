@@ -71,12 +71,7 @@
         },
         "manifest-application-type": {
             "description": "One of the following: public, dedicated or local",
-            "type": "string",
-            "enum": [
-                "public",
-                "dedicated",
-                "local"
-            ]
+            "type": "string"
         }
     },
     "required": [
