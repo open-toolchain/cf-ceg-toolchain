@@ -14,16 +14,8 @@
     },
     "type": "object",
     "properties": {
-        "manifest-repo": {
-            "description": "Service contract manifest repository",
-            "type": "string"
-        },
         "service-name": {
             "description": "Name of the offering hosting the service",
-            "type": "string"
-        },
-        "component-name": {
-            "description": "Name of the deployed service",
             "type": "string"
         },
         "bailey-project": {
@@ -40,9 +32,7 @@
         }
     },
     "required": [
-        "manifest-repo",
         "service-name",
-        "component-name",
         "baliey-project",
         "pager-duty",
         "customer-tickets"
@@ -50,21 +40,9 @@
     "form": [
         {
             "type": "text",
-            "readonly": true,
-            "title": "Manifest Runtime GIT Repo",
-            "key": "manifest-repo"
-        },
-        {
-            "type": "text",
             "readonly": false,
             "title": "Offering Name",
             "key": "service-name"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Component Name",
-            "key": "component-name"
         },
         {
             "type": "text",
