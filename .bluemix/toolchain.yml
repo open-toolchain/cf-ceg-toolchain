@@ -83,13 +83,6 @@ services:
       description: 
         $ref: "#/messages/sc.toolDescription"
       additional-properties:
-  servicemanifest:
-    service_id: customtool
-    parameters:
-      type: Manifest
-      imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
-      documentationUrl: https://github.ibm.com/CloudTools/manifest-runtime-production
-      description: Service Contract maniest document
 form:
   pipeline:
     parameters:
@@ -101,7 +94,12 @@ form:
     schema:
       $ref: deploy.json
   servicemanifest:
+    service_id: customtool
     parameters:
+      type: Manifest
+      imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
+      documentationUrl: https://github.ibm.com/CloudTools/manifest-runtime-production
+      description: Service Contract maniest document
       component-name: '{{services.sample-repo.parameters.repo_name}}'
       manifest-repo: https://github.ibm.com/CloudTools/manifest-runtime-production
     schema:
