@@ -49,16 +49,40 @@
     ],
     "form": [
         {
-            "type": "section",
-            "description": "Manifest static information",
-            "items": [
-                "service-name",
-                "component-name",
-                "pager-duty",
-                "bailey-project",
-                "customer-tickets"
-
-            ]
+            "type": "text",
+            "readonly": true,
+            "title": "Manifest Runtime GIT Repo",
+            "key": "manifest-repo"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Name of catalog offering hosting the service",
+            "key": "service-name"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Name of the component ( may be different from application name )",
+            "key": "component-name"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "PagerDuty escalation policy",
+            "key": "pager-duty"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Bailey project name",
+            "key": "baliey-project"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Customer ticket repository",
+            "key": "customer-tickets"
         }
     ]
 }
