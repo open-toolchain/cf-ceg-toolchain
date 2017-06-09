@@ -44,7 +44,7 @@ stages:
 
       # push into dedicated branch
       git push origin ${RUNTIME_BRANCH}
-- name: GENERATE-TEMPLATE
+- name: GENERATE-MANIFEST
   inputs:
   - type: git
     branch: add-sc-runtime
@@ -73,6 +73,6 @@ stages:
       make generate
 
       # Add the template
-      git add manifest/res/servicemanifest.json
+      git add res/servicemanifest.json
       git commit -m "Adding generated Service Manifest Json"
       git push origin ${RUNTIME_BRANCH}
