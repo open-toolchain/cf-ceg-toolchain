@@ -69,8 +69,8 @@ stages:
       git config user.email "${GIT_USER}@ibm.com"
       git config user.name "${GIT_USER}"
 
-      cd manifest || echo "Manifest directory missing"; exit 1
-      make generate || echo "Make failed"; exit 1
+      cd manifest
+      make generate
 
       # Add the template
       git add manifest/res/servicemanifest.json
