@@ -54,7 +54,7 @@
             ]
         },
         "manifest-repo-key": {
-            "description": "Deployment key for the manifest runtime repo.  Can be found in the mainifest [Readme](https://github.ibm.com/CloudTools/manifest-runtime-production/blob/master/README.md)",
+            "description": "Deployment key for the manifest runtime repo.",
             "type": "string"
         },
         "manifest-service-name": {
