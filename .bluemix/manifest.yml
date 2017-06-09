@@ -3,8 +3,8 @@ stages:
 - name: INITIALIZE-REPO
   inputs:
   - type: git
+    branch: master
     service: ${SAMPLE_REPO}
-    branch: master    
   properties:
   - name: RUNTIME-BRANCH
     value: add-sc-runtime
@@ -14,8 +14,9 @@ stages:
     type: secure
   jobs:
   - name: Add Runtime
-    type: shell
-    script: |
+    type: builder
+    artifact_dir: ''
+    script: |-
     #!/bin/bash
     # If you ever repeat these steps, this make generate a message saying the remote already exists.
     git_repo="${$MANIFEST_REPO/KEY/$REPO_KEY}"
@@ -30,8 +31,8 @@ stages:
     # push into dedicated branch
     $ git push origin ${RUNTIME-BRANCH}
   - name: Create manifest template
-    type: shell
-    script: |
+    type: builder
+    script: |-
     #!/bin/bash
 
     cd manifest || echo "Manifest directory missing"; exit 1
