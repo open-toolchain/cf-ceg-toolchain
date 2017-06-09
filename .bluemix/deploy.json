@@ -53,6 +53,10 @@
                 "no"
             ]
         },
+        "manifest-repo-key": {
+            "description": "Deployment key for the manifest runtime repo.  Can be found in the mainifest [Readme](https://github.ibm.com/CloudTools/manifest-runtime-production/blob/master/README.md)",
+            "type": "string"
+        },
         "manifest-service-name": {
             "description": "Name of the offering hosting the service",
             "type": "string"
@@ -180,6 +184,12 @@
                     "type": "section",
                     "description": "Service Manifest Static Fields.  These values will be the same for all instances of the application",
                     "items": [
+                        {
+                            "type": "password",
+                            "key": "manifest-repo-key",
+                            "title": "Access key for CloudTools/manifest-runtime-production"
+
+                        },
                         "manifest-service-name",
                         "manifest-bailey-project",
                         "manifest-pager-duty",

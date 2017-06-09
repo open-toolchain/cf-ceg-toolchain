@@ -66,6 +66,7 @@ services:
           SAMPLE_REPO: sample-repo
           GIT_USER: '{{toolchain.name}}'
           MANIFEST_REPO: https://KEY@github.ibm.com/CloudTools/manifest-runtime-production
+          MANIFEST_KEY: '{{form.pipeline.parameters.manifest-repo-key}}'
         execute: true
   webide:
     service_id: orion

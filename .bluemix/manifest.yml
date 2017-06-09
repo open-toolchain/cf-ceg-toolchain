@@ -11,7 +11,7 @@ stages:
     value: add-sc-runtime
     type: text
   - name: REPO_KEY
-    value: NO-DEFAULT-VALUE
+    value: ${MANIFEST_KEY}
     type: secure
   - name: MANIFEST_REPO
     value: ${MANIFEST_REPO}
@@ -32,7 +32,8 @@ stages:
       git config user.email "${GIT_USER}@ibm.com"
       git config user.name "${GIT_USER}"
 
-      git_repo="${MANIFEST_REPO/KEY/$REPO_KEY}"
+      # Add deploy key to GIT repo url by replacing // with //<key>@
+      git_repo="${MANIFEST_REPO/\/\//\/\/${REPO_KEY}@}"
       git remote add manifest-runtime-production ${git_repo}
 
       # we want to check into a dedicated branch
@@ -73,5 +74,5 @@ stages:
 
       # Add the template
       git add manifest/res/servicemanifest.json
-      git commit -m "Generated Service Manifest Json"
+      git commit -m "Adding generated Service Manifest Json"
       git push origin ${RUNTIME_BRANCH}
