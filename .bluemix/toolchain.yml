@@ -50,13 +50,6 @@ services:
           PROD_SPACE_NAME: '{{form.pipeline.parameters.prod-space}}'
           PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
-          MANIFEST_REPO: https://KEY@github.ibm.com/CloudTools/manifest-runtime-production
-          SERVICE_NAME: '{{form.pipeline.parameters.manifest-service-name}}'
-          COMPONENT_NAME: '{{form.pipeline.parameters.prod-app-name}}'
-          BAILEY_URL: '{{manifest-bailey-project}}'
-          PAGER_DUTY_URL: '{{form.pipeline.parameters.manifest-pager-duty}}'
-          CUSTOMER_TICKET_URL: '{{form.pipeline.parameters.manifest-customer-tickets}}'          
-          CTYPE: '{{form.pipeline.parameters.manifest-application-type}}'
         execute: true
   manifest-clone:
     service_id: pipeline
@@ -71,14 +64,9 @@ services:
           $refType: text
         env:
           SAMPLE_REPO: sample-repo
-          MANIFEST_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
-          SERVICE_NAME: '{{form.pipeline.parameters.manifest-service-name}}'
-          COMPONENT_NAME: '{{form.pipeline.parameters.prod-app-name}}'
-          BAILEY_URL: '{{manifest-bailey-project}}'
-          PAGER_DUTY_URL: '{{form.pipeline.parameters.manifest-pager-duty}}'
-          CUSTOMER_TICKET_URL: '{{form.pipeline.parameters.manifest-customer-tickets}}'          
-          CTYPE: '{{form.pipeline.parameters.manifest-application-type}}'
-        execute: false 
+          GIT_USER: '{{toolchain.name}}'
+          MANIFEST_REPO: https://KEY@github.ibm.com/CloudTools/manifest-runtime-production
+        execute: true
   webide:
     service_id: orion
   messaging:

@@ -1,40 +1,77 @@
 ---
----
 stages:
 - name: INITIALIZE-REPO
   inputs:
   - type: git
     branch: master
     service: ${SAMPLE_REPO}
+    dir_name: null
   properties:
-  - name: RUNTIME-BRANCH
+  - name: RUNTIME_BRANCH
     value: add-sc-runtime
     type: text
-  - name: REPO-KEY
+  - name: REPO_KEY
     value: NO-DEFAULT-VALUE
     type: secure
+  - name: MANIFEST_REPO
+    value: ${MANIFEST_REPO}
+    type: text
+  - name: GIT_USER
+    value: ${GIT_USER}
+    type: text
   jobs:
   - name: Add Runtime
     type: builder
     artifact_dir: ''
+    build_type: shell
     script: |-
-    #!/bin/bash
-    # If you ever repeat these steps, this make generate a message saying the remote already exists.
-    git_repo="${$MANIFEST_REPO/KEY/$REPO_KEY}"
-    $ git remote add manifest-runtime-production ${git_repo}
+      #!/bin/bash
 
-    # we want to check into a dedicated branch
-    $ git checkout -b ${RUNTIME-BRANCH}
+      set -x      
 
-    # git subtree add triggers a background commit if there are changes available
-    $ git subtree add --prefix=manifest manifest-runtime-production master -m "Add manifest-runtime-production content" --squash
+      git config user.email "${GIT_USER}@ibm.com"
+      git config user.name "${GIT_USER}"
 
-    # push into dedicated branch
-    $ git push origin ${RUNTIME-BRANCH}
-  - name: Create manifest template
+      git_repo="${MANIFEST_REPO/KEY/$REPO_KEY}"
+      git remote add manifest-runtime-production ${git_repo}
+
+      # we want to check into a dedicated branch
+      git checkout -b ${RUNTIME_BRANCH}
+
+      # git subtree add triggers a background commit if there are changes available
+      git subtree add --prefix=manifest manifest-runtime-production master -m "Add manifest-runtime-production content" --squash
+
+      # push into dedicated branch
+      git push origin ${RUNTIME_BRANCH}
+- name: GENERATE-TEMPLATE
+  inputs:
+  - type: git
+    branch: add-sc-runtime
+    service: ${SAMPLE_REPO}
+    dir_name: null
+  triggers:
+  - type: stage
+  properties:
+  - name: GIT_USER
+    value: ${GIT_USER}
+    type: text
+  jobs:
+  - name: Generate manifest
     type: builder
-    script: |-
-    #!/bin/bash
+    artifact_dir: ''
+    build_type: shell
+    script: |
+      #!/bin/bash
 
-    cd manifest || echo "Manifest directory missing"; exit 1
-    make generate || echo "Make failed"; exit 1
+      set -x
+
+      git config user.email "${GIT_USER}@ibm.com"
+      git config user.name "${GIT_USER}"
+
+      cd manifest || echo "Manifest directory missing"; exit 1
+      make generate || echo "Make failed"; exit 1
+
+      # Add the template
+      git add manifest/res/servicemanifest.json
+      git commit -m "Generated Service Manifest Json"
+      git push origin ${RUNTIME_BRANCH}
