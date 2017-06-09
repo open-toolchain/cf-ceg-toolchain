@@ -2,17 +2,19 @@
 stages:
 - name: INITIALIZE-REPO
   inputs:
-  - type: none
+  - type: git
+    service: ${SAMPLE_REPO}
+    branch: master    
   properties:
   - name: RUNTIME-BRANCH
     value: add-sc-runtime
     type: text
   - name: REPO-KEY
-    value: 
-    type: text
+    value: NO-DEFAULT-VALUE
+    type: secure
   jobs:
   - name: Add Runtime
-    type: script
+    type: shell
     script: |
     #!/bin/bash
     # If you ever repeat these steps, this make generate a message saying the remote already exists.
@@ -27,3 +29,10 @@ stages:
 
     # push into dedicated branch
     $ git push origin ${RUNTIME-BRANCH}
+  - name: Create manifest template
+    type: shell
+    script: |
+    #!/bin/bash
+
+    cd manifest || echo "Manifest directory missing"; exit 1
+    make generate || echo "Make failed"; exit 1
