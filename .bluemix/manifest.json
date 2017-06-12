@@ -1,0 +1,86 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "messages": {
+        "$i18n": "locales.yml"
+    },
+    "title": "Manifest TITILE",
+    "description": "MANIFEST DESCRIPTION",
+    "longDescription": "MANIFEST LONG DESCRIPTION",
+    "type": "object",
+    "properties": {
+        "manifest-service-name": {
+            "description": "Name of the service offering",
+            "type": "string"
+        },
+        "manifest-component-name": {
+            "description": "Name of the component to register",
+            "type": "string"
+        },
+        "manifest-pager-duty": {
+            "description": "URL to PagerDuty escalation policy",
+            "type": "string"
+        },
+        "manifest-bailey-url": {
+            "description": "URL to the Bailey instance in use",
+            "type": "string"
+        },
+        "manifest-bailey-project": {
+            "description": "Name of the Bailey project your team is using",
+            "type": "string"
+        },
+        "manifest-customer-tickets": {
+            "description": "URL where customer tickets are opened",
+            "type": "string"
+        }
+    },
+    "required": [
+        "manifest-service-name",
+        "manifest-component-name",
+        "manifest-pager-duty",
+        "manifest-bailey-url",
+        "manifest-bailey-project",
+        "manifest-customer-tickets"
+    ],
+    "form": [
+        {
+            "type": "validator",
+            "url": "/devops/setup/bm-helper/helper.html"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Offering name",
+            "key": "manifest-service-name"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Component name",
+            "key": "manifest-component-name"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Link to PagerDuty Escalation Policy",
+            "key": "manifest-pager-duty"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Link to Bailey instance",
+            "key": "manifest-bailey-url"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Bailey project name",
+            "key": "manifest-bailey-project"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "URL to Customer ticket service",
+            "key": "manifest-customer-tickets"
+        }
+    ]
+}
