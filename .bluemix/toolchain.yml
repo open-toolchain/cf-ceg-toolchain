@@ -11,7 +11,6 @@ template:
   required:
     - sample-build
     - sample-repo
-    - manifest-clone
   info:
     git url: >-
       [https://github.com/open-toolchain/cf-starter-wwghe-toolchain](https://github.com/open-toolchain/cf-starter-wwghe-toolchain)
