@@ -11,10 +11,10 @@ stages:
     value: add-sc-runtime
     type: text
   - name: REPO_KEY
-    value: ${MANIFEST_KEY}
+    value: ${RUNTIME_REPO_KEY}
     type: secure
-  - name: MANIFEST_REPO
-    value: ${MANIFEST_REPO}
+  - name: RUNTIME_REPO
+    value: ${RUNTIME_REPO}
     type: text
   - name: GIT_USER
     value: ${GIT_USER}
@@ -33,7 +33,7 @@ stages:
       git config user.name "${GIT_USER}"
 
       # Add deploy key to GIT repo url by replacing // with //<key>@
-      git_repo="${MANIFEST_REPO/\/\//\/\/${REPO_KEY}@}"
+      git_repo="${RUNTIME_REPO/\/\//\/\/${REPO_KEY}@}"
       git remote add manifest-runtime-production ${git_repo}
 
       # we want to check into a dedicated branch
@@ -93,11 +93,11 @@ stages:
       // Edit the required fields
       manifest.service_name = 'service-name';
       manifest.component_name = 'component-name';
-      manifest.cname = 'cname';
-      manifest.ctype = 'ctype';
-      manifest.region = 'region splt';
+      manifest.cname = '\$env(\'CNAME\')';
+      manifest.ctype = 'public';
+      manifest.region = '\$env(\'REGION\')';
       manifest.resource_type = 'cf-application';
-      manifest.tenancy = 'tenancy';
+      manifest.tenancy = 'shared';
       manifest.pager_duty = 'escalation url';
       manifest.team_email = 'team_email';
       manifest.bailey_url = 'bailey-url';
