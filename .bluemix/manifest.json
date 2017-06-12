@@ -3,7 +3,7 @@
     "messages": {
         "$i18n": "locales.yml"
     },
-    "title": "Manifest TITILE",
+    "title": "Service Contract Manifest",
     "description": "MANIFEST DESCRIPTION",
     "longDescription": "MANIFEST LONG DESCRIPTION",
     "type": "object",
