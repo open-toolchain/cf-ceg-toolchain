@@ -128,7 +128,7 @@ form:
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
     schema:
       $ref: deploy.json
-  servicemanifest:
+  customtool:
     parameters:
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
       manifest-service-name: '{{toolchain.name}}'
