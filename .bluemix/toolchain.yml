@@ -65,8 +65,15 @@ services:
         env:
           SAMPLE_REPO: sample-repo
           GIT_USER: '{{toolchain.name}}'
-          MANIFEST_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
-          MANIFEST_KEY: '{{form.pipeline.parameters.manifest-repo-key}}'
+          RUNTIME_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
+          RUNTIME_REPO_KEY: '{{form.pipeline.parameters.manifest-repo-key}}'
+          MANIFEST_SERVICE: '{{form.servicemanifest.parameters.manifest-service-name}}'
+          MANIFEST_COMPONENT: '{{form.servicemanifest.parameters.manifest-component-name}}'
+          MANIFEST_PD: '{{form.servicemanifest.parameters.manifest-pager-duty}}'
+          MANIFEST_REPO: '{{services.sample-repo.parameters.repo_url}}'
+          MANIFEST_BAILEY_URL: '{{form.servicemanifest.parameters.manifest-bailey-url}}'
+          MANIFEST_BAILEY_PROJ: '{{form.servicemanifest.parameters.manifest-bailey-project}}'
+          MANIFEST_CUSTOMER_URL: '{{form.servicemanifest.parameters.manifest-customer-tickets}}'
         execute: true
   webide:
     service_id: orion
@@ -100,6 +107,16 @@ services:
       description: 
         $ref: "#/messages/sc.toolDescription"
       additional-properties:
+  servicemanifest:
+    service_id: customtool
+      type: Service Contract Manifest
+      lifecyclePhase: "DELIVER"
+      imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
+      documentationUrl: https://github.ibm.com/CloudTools/manifest-runtime-production/blob/master/README.md
+      name: Service Contract
+      dashboard_url: https://pages.github.ibm.com/CloudEngineering/service_contract/
+      description: The service manifest contains metadata of your service in accordance with the actual version of the Service Contract.
+      additional-properties:
 form:
   pipeline:
     parameters:
@@ -108,7 +125,14 @@ form:
       prod-region: ibm:yp:us-south
       prod-space: prod
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
-      manifest-service-name: '{{toolchain.name}}'
-      manifest-application-type: public
     schema:
       $ref: deploy.json
+  servicemanifest:
+    parameters:
+      manifest-service-name: '{{toolchain.name}}'
+      manifest-component-name: '{{form.pipeline.parameters.prod-app-name}}'
+      manifest-pager-duty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
+      manifest-bailey-url: https://w3bailey.isie.ibmcloud.com/
+      manifest-bailey-project: '{{toolchain.name}}'
+    schema:
+      $ref: manifest.json
