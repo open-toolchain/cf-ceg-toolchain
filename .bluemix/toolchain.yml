@@ -107,17 +107,6 @@ services:
       description: 
         $ref: "#/messages/sc.toolDescription"
       additional-properties:
-  servicemanifest:
-    service_id: customtool
-    parameters:
-      type: Service Contract Manifest-1
-      lifecyclePhase: "DELIVER"
-      imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
-      documentationUrl: https://github.ibm.com/CloudTools/manifest-runtime-production/blob/master/README.md
-      name: Service Contract-1
-      dashboard_url: https://pages.github.ibm.com/CloudEngineering/service_contract/
-      description: The service manifest contains metadata of your service in accordance with the actual version of the Service Contract.
-      additional-properties:
 form:
   pipeline:
     parameters:
