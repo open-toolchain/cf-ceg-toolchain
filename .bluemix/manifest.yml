@@ -152,6 +152,7 @@ stages:
       #!/bin/bash
 
       set -x
+      export REGISTRYHOST=serviceregistry.stage1.ng.bluemix.net
 
       # Change to manifest directory
       cd manifest
