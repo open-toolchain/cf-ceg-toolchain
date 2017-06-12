@@ -66,14 +66,14 @@ services:
           SAMPLE_REPO: sample-repo
           GIT_USER: '{{toolchain.name}}'
           RUNTIME_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
-          RUNTIME_REPO_KEY: '{{form.servicemanifest.parameters.manifest-repo-key}}'
-          MANIFEST_SERVICE: '{{form.servicemanifest.parameters.manifest-service-name}}'
-          MANIFEST_COMPONENT: '{{form.servicemanifest.parameters.manifest-component-name}}'
-          MANIFEST_PD: '{{form.servicemanifest.parameters.manifest-pager-duty}}'
+          RUNTIME_REPO_KEY: '{{form.customtool.parameters.manifest-repo-key}}'
+          MANIFEST_SERVICE: '{{form.customtool.parameters.manifest-service-name}}'
+          MANIFEST_COMPONENT: '{{form.customtool.parameters.manifest-component-name}}'
+          MANIFEST_PD: '{{form.customtool.parameters.manifest-pager-duty}}'
           MANIFEST_REPO: '{{services.sample-repo.parameters.repo_url}}'
-          MANIFEST_BAILEY_URL: '{{form.servicemanifest.parameters.manifest-bailey-url}}'
-          MANIFEST_BAILEY_PROJ: '{{form.servicemanifest.parameters.manifest-bailey-project}}'
-          MANIFEST_CUSTOMER_URL: '{{form.servicemanifest.parameters.manifest-customer-tickets}}'
+          MANIFEST_BAILEY_URL: '{{form.customtool.parameters.manifest-bailey-url}}'
+          MANIFEST_BAILEY_PROJ: '{{form.customtool.parameters.manifest-bailey-project}}'
+          MANIFEST_CUSTOMER_URL: '{{form.customtool.parameters.manifest-customer-tickets}}'
         execute: true
   webide:
     service_id: orion
