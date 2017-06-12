@@ -31,6 +31,10 @@
         "manifest-customer-tickets": {
             "description": "URL where customer tickets are opened",
             "type": "string"
+        },
+        "manifest-repo-key": {
+            "description": "Deployment key for the manifest runtime repo.",
+            "type": "string"
         }
     },
     "required": [
@@ -39,12 +43,19 @@
         "manifest-pager-duty",
         "manifest-bailey-url",
         "manifest-bailey-project",
-        "manifest-customer-tickets"
+        "manifest-customer-tickets",
+        "manifest-repo-key"
     ],
     "form": [
         {
             "type": "validator",
             "url": "/devops/setup/bm-helper/helper.html"
+        },
+        {
+            "type": "password",
+            "readonly": false,
+            "title": "Offering name",
+            "key": "manifest-repo-key"
         },
         {
             "type": "text",
