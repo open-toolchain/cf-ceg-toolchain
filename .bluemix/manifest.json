@@ -54,7 +54,7 @@
         {
             "type": "password",
             "readonly": false,
-            "title": "Offering name",
+            "title": "Manifest Runtime Key",
             "key": "manifest-repo-key"
         },
         {
