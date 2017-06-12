@@ -12,7 +12,7 @@ stages:
     type: text
   - name: REPO_KEY
     value: ${RUNTIME_REPO_KEY}
-    type: secure
+    type: test
   - name: RUNTIME_REPO
     value: ${RUNTIME_REPO}
     type: text
@@ -53,8 +53,29 @@ stages:
   triggers:
   - type: stage
   properties:
+  - name: RUNTIME_BRANCH
+    value: add-sc-runtime
+    type: text
   - name: GIT_USER
     value: ${GIT_USER}
+    type: text
+  - name: MANIFEST_SERVICE
+    value: ${MANIFEST_SERVICE}
+    type: text
+  - name: MANIFEST_COMPONENT
+    value: ${MANIFEST_COMPONENT}
+    type: text
+  - name: MANIFEST_PD
+    value: ${MAMIFEST_PD}
+    type: text
+  - name: MANIFEST_REPO
+    value: ${MANIFEST_REPO}
+    type: text
+  - name: MANIFEST_BAILEY_URL
+    value: ${MANIFEST_BAILEY_URL}
+    type: text
+  - name: MANIFEST_BAILEY_PROJ
+    value: ${MANIFEST_BAILEY_PROJ}
     type: text
   jobs:
   - name: Generate manifest
@@ -69,40 +90,32 @@ stages:
       git config user.email "${GIT_USER}@ibm.com"
       git config user.name "${GIT_USER}"
 
-      cd manifest
-      make generate
-  - name: Create and register manifest
-    type: builder
-    artifact_dir: ''
-    build_type: shell
-    script: |-
-      #!/bin/bash
-
-      set -x
-
       rootdir=${PWD}
-      manifestdir=manifest/res
+
       manifest_template=servicemanifest.json
 
-      cd ${manifestdir}
+      cd manifest
+      make generate
+
+      cd res
       node > out_${manifest_template} <<EOF
 
       // Read data
       var manifest = require('./${manifest_template}');
 
       // Edit the required fields
-      manifest.service_name = 'service-name';
-      manifest.component_name = 'component-name';
+      manifest.service_name = '${MANIFEST_SERVICE}';
+      manifest.component_name = '${MANIFEST_COMPONENT}';
       manifest.cname = '\$env(\'CNAME\')';
       manifest.ctype = 'public';
       manifest.region = '\$env(\'REGION\')';
       manifest.resource_type = 'cf-application';
       manifest.tenancy = 'shared';
-      manifest.pager_duty = 'escalation url';
-      manifest.team_email = 'team_email';
-      manifest.bailey_url = 'bailey-url';
-      manifest.bailey_project = 'bailey-project';
-      manifest.repo_url = 'git-repo';
+      manifest.pager_duty = '${MANIFEST_PD}';
+      manifest.team_email = 'team_email@ibm.com';
+      manifest.bailey_url = '${MANIFEST_BAILEY_URL}';
+      manifest.bailey_project = '${MANIFEST_BAILEY_PROJ}';
+      manifest.repo_url = '${MANIFEST_REPO}';
       manifest.bluemix_account = '';
 
       // Remove invalid data
@@ -124,11 +137,11 @@ stages:
       EOF
 
       # Move the file to checkin
-      mv ${manifestdir}/out_${manifest_template} ${manifestdir}/${manifest_template}
+      mv out_${manifest_template} ${manifest_template}
 
       # Add the updated manifest
       cd ${rootdir}
-      git add ${manifestdir}/servicemanifest.json
+      git add manifest/res/servicemanifest.json
       git commit -m "Adding Service Manifest file"
       git push origin ${RUNTIME_BRANCH}
   - name: Register manifest
