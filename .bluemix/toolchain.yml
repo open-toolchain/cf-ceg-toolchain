@@ -109,6 +109,7 @@ services:
       additional-properties:
   servicemanifest:
     service_id: customtool
+    parameters:
       type: Service Contract Manifest
       lifecyclePhase: "DELIVER"
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
