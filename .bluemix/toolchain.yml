@@ -11,6 +11,7 @@ template:
   required:
     - sample-build
     - sample-repo
+    - manifest-runtime
   info:
     git url: >-
       [https://github.com/open-toolchain/cf-starter-wwghe-toolchain](https://github.com/open-toolchain/cf-starter-wwghe-toolchain)
@@ -117,7 +118,8 @@ form:
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
     schema:
       $ref: deploy.json
-  customtool:
+  manifest-runtime:
+    service_id: customtool
     parameters:
       type: Manifest Runtime
       lifecyclePhase: "DELIVER"
