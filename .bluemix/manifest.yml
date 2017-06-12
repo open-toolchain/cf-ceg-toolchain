@@ -144,10 +144,13 @@ stages:
       git add manifest/res/servicemanifest.json
       git commit -m "Adding Service Manifest file"
       git push origin ${RUNTIME_BRANCH}
-  - name: Register manifest
-    type: builder
-    artifact_dir: ''
-    build_type: shell
+  - name: Deploy
+    type: deployer
+    target:
+      region_id: ibm:ys1:us-south
+      organization: mark.duquette@us.ibm.com
+      space: dev
+      application: Manifest-Libraires
     script: |-
       #!/bin/bash
 
