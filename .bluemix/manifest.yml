@@ -66,7 +66,7 @@ stages:
     value: ${MANIFEST_COMPONENT}
     type: text
   - name: MANIFEST_PD
-    value: ${MAMIFEST_PD}
+    value: ${MANIFEST_PD}
     type: text
   - name: MANIFEST_REPO
     value: ${MANIFEST_REPO}
