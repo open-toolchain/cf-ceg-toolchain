@@ -11,6 +11,7 @@ template:
   required:
     - sample-build
     - sample-repo
+    - servicemanifest
   info:
     git url: >-
       [https://github.com/open-toolchain/cf-starter-wwghe-toolchain](https://github.com/open-toolchain/cf-starter-wwghe-toolchain)
