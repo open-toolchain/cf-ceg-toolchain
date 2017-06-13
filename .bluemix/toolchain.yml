@@ -11,6 +11,7 @@ template:
   required:
     - sample-build
     - sample-repo
+    - manifest-clone
   info:
     git url: >-
       [https://github.com/open-toolchain/cf-starter-wwghe-toolchain](https://github.com/open-toolchain/cf-starter-wwghe-toolchain)
@@ -124,9 +125,7 @@ form:
       lifecyclePhase: "DELIVER"
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
       documentationUrl: https://github.ibm.com/CloudTools/manifest-runtime-production/blob/master/README.md
-      name: Manifest Runtime Libraries
       dashboard_url: https://pages.github.ibm.com/CloudEngineering/service_contract/
-      description: The service manifest contains metadata of your service in accordance with the actual version of the Service Contract.
       manifest-service-name: '{{toolchain.name}}'
       manifest-pager-duty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
       manifest-bailey-url: https://w3bailey.isie.ibmcloud.com/
