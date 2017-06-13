@@ -40,6 +40,9 @@ stages:
   - name: BUILD_PREFIX
     value: master
     type: text
+  - name: REGION_ID
+    value: ${STAGING_REGION_ID}
+    type: text
   jobs:
   - name: Rolling Deploy
     type: deployer
@@ -52,11 +55,12 @@ stages:
       #!/bin/bash
       # Push app
 
+      set -x
       export CF_APP_NAME="$CF_APP-staging"
 
       # Set variables needed for the manifest
       cf set-env $CNAME staging
-      cf set-env $REGION ${BLUEMIX_REGION##*:}
+      cf set-env $REGION ${REGION_ID##*:}
 
       if ! cf app $CF_APP_NAME; then  
         cf push $CF_APP_NAME
