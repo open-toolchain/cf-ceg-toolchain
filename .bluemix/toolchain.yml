@@ -118,7 +118,7 @@ form:
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
     schema:
       $ref: deploy.json
-  customtool:
+  servicemanifest:
     parameters:
       type: Manifest Runtime
       lifecyclePhase: "DELIVER"
