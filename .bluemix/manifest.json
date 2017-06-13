@@ -12,10 +12,6 @@
             "description": "Name of the service offering",
             "type": "string"
         },
-        "manifest-component-name": {
-            "description": "Name of the component to register",
-            "type": "string"
-        },
         "manifest-pager-duty": {
             "description": "URL to PagerDuty escalation policy",
             "type": "string"
@@ -43,7 +39,6 @@
     },
     "required": [
         "manifest-service-name",
-        "manifest-component-name",
         "manifest-pager-duty",
         "manifest-bailey-url",
         "manifest-bailey-project",
@@ -67,12 +62,6 @@
             "readonly": false,
             "title": "Offering name",
             "key": "manifest-service-name"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Component name",
-            "key": "manifest-component-name"
         },
         {
             "type": "text",

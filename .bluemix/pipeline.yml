@@ -55,8 +55,8 @@ stages:
       export CF_APP_NAME="$CF_APP-staging"
 
       echo "STAGING REGION ID: ${STAGING_REGION_ID}"
-      echo "STAGING REGION ID: ${STAGING_ORG_NAME}"
-      echo "STAGING REGION ID: ${CF_APP_NAME}"
+      echo "STAGING ORG NAME: ${STAGING_ORG_NAME}"
+      echo "CF_APP_NAME: ${CF_APP_NAME}"
 
       if ! cf app $CF_APP_NAME; then  
         cf push $CF_APP_NAME

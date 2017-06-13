@@ -62,9 +62,6 @@ stages:
   - name: MANIFEST_SERVICE
     value: ${MANIFEST_SERVICE}
     type: text
-  - name: MANIFEST_COMPONENT
-    value: ${MANIFEST_COMPONENT}
-    type: text
   - name: MANIFEST_PD
     value: ${MANIFEST_PD}
     type: text
@@ -108,7 +105,7 @@ stages:
 
       // Edit the required fields
       manifest.service_name = '${MANIFEST_SERVICE}';
-      manifest.component_name = '${MANIFEST_COMPONENT}';
+      manifest.component_name = '\$env(\'CF_APP_NAME\')';
       manifest.cname = '\$env(\'CNAME\')';
       manifest.ctype = 'public';
       manifest.region = '\$env(\'REGION\')';

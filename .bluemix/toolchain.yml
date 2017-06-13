@@ -128,9 +128,8 @@ form:
       dashboard_url: https://pages.github.ibm.com/CloudEngineering/service_contract/
       description: The service manifest contains metadata of your service in accordance with the actual version of the Service Contract.
       manifest-service-name: '{{toolchain.name}}'
-      manifest-component-name: '{{form.pipeline.parameters.prod-app-name}}'
       manifest-pager-duty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
       manifest-bailey-url: https://w3bailey.isie.ibmcloud.com/
-      manifest-bailey-project: '{{toolchain.name}}'
+      manifest-bailey-project: '{{toolchain.name}}'    
     schema:
       $ref: manifest.json
