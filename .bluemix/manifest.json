@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
+    "imageUrl": "https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg",
     "messages": {
         "$i18n": "locales.yml"
     },
