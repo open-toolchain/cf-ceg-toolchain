@@ -57,7 +57,7 @@ services:
     parameters:
       services:
         - sample-repo
-      name: Manifest-Libraires
+      name: Manifest Libraires
       ui-pipeline: false
       configuration:
         content:
@@ -67,15 +67,15 @@ services:
           SAMPLE_REPO: sample-repo
           GIT_USER: '{{toolchain.name}}'
           RUNTIME_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
-          RUNTIME_REPO_KEY: '{{form.customtool.parameters.manifest-repo-key}}'
-          MANIFEST_SERVICE: '{{form.customtool.parameters.manifest-service-name}}'
-          MANIFEST_COMPONENT: '{{form.customtool.parameters.manifest-component-name}}'
-          MANIFEST_PD: '{{form.customtool.parameters.manifest-pager-duty}}'
+          RUNTIME_REPO_KEY: '{{form.manifest.parameters.manifest-repo-key}}'
+          MANIFEST_SERVICE: '{{form.manifest.parameters.manifest-service-name}}'
+          MANIFEST_COMPONENT: '{{form.manifest.parameters.manifest-component-name}}'
+          MANIFEST_PD: '{{form.manifest.parameters.manifest-pager-duty}}'
           MANIFEST_REPO: '{{services.sample-repo.parameters.repo_url}}'
-          MANIFEST_BAILEY_URL: '{{form.customtool.parameters.manifest-bailey-url}}'
-          MANIFEST_BAILEY_PROJ: '{{form.customtool.parameters.manifest-bailey-project}}'
-          MANIFEST_CUSTOMER_URL: '{{form.customtool.parameters.manifest-customer-tickets}}'
-          MANIFEST_EMAIL: '{{form.customtool.parameters.manifest-email}}'
+          MANIFEST_BAILEY_URL: '{{form.manifest.parameters.manifest-bailey-url}}'
+          MANIFEST_BAILEY_PROJ: '{{form.manifest.parameters.manifest-bailey-project}}'
+          MANIFEST_CUSTOMER_URL: '{{form.manifest.parameters.manifest-customer-tickets}}'
+          MANIFEST_EMAIL: '{{form.manifest.parameters.manifest-email}}'
         execute: true
   webide:
     service_id: orion
@@ -119,8 +119,8 @@ form:
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
     schema:
       $ref: deploy.json
-  manifestruntime:
-    parameters:
+  manifest:
+    parameters: 
       manifest-service-name: '{{toolchain.name}}'
       manifest-pager-duty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
       manifest-bailey-url: https://w3bailey.isie.ibmcloud.com/
