@@ -1,6 +1,6 @@
 ---
 stages:
-- name: INITIALIZE-REPO
+- name: Add runtime repo
   inputs:
   - type: git
     branch: master
@@ -44,7 +44,7 @@ stages:
 
       # push into dedicated branch
       git push origin ${RUNTIME_BRANCH}
-- name: GENERATE-MANIFEST
+- name: Create base manifest
   inputs:
   - type: git
     branch: add-sc-runtime
