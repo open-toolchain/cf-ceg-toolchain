@@ -121,11 +121,6 @@ form:
       $ref: deploy.json
   manifestruntime:
     parameters:
-      type: Manifest Runtime Libraries
-      lifecyclePhase: "DELIVER"
-      imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
-      documentationUrl: https://github.ibm.com/CloudTools/manifest-runtime-production/blob/master/README.md
-      dashboard_url: https://pages.github.ibm.com/CloudEngineering/service_contract/
       manifest-service-name: '{{toolchain.name}}'
       manifest-pager-duty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
       manifest-bailey-url: https://w3bailey.isie.ibmcloud.com/
