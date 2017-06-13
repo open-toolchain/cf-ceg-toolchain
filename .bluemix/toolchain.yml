@@ -74,6 +74,7 @@ services:
           MANIFEST_BAILEY_URL: '{{form.customtool.parameters.manifest-bailey-url}}'
           MANIFEST_BAILEY_PROJ: '{{form.customtool.parameters.manifest-bailey-project}}'
           MANIFEST_CUSTOMER_URL: '{{form.customtool.parameters.manifest-customer-tickets}}'
+          MANIFEST_EMAIL: '{{form.customtool.parameters.manifest-email}}'
         execute: true
   webide:
     service_id: orion

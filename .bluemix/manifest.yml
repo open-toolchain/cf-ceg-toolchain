@@ -77,6 +77,9 @@ stages:
   - name: MANIFEST_BAILEY_PROJ
     value: ${MANIFEST_BAILEY_PROJ}
     type: text
+  - name: MANIFEST_EMAIL
+    value: ${MANIFEST_EMAIL}
+    type: text
   jobs:
   - name: Generate manifest
     type: builder
@@ -112,7 +115,7 @@ stages:
       manifest.resource_type = 'cf-application';
       manifest.tenancy = 'shared';
       manifest.pager_duty = '${MANIFEST_PD}';
-      manifest.team_email = 'team_email@ibm.com';
+      manifest.team_email = '${MANIFEST_EMAIL}';
       manifest.bailey_url = '${MANIFEST_BAILEY_URL}';
       manifest.bailey_project = '${MANIFEST_BAILEY_PROJ}';
       manifest.repo_url = '${MANIFEST_REPO}';
@@ -157,6 +160,8 @@ stages:
       set -x
       export REGISTRYHOST=serviceregistry.stage1.ng.bluemix.net
 
+      rootdir=${PWD}
+
       # Change to manifest directory
       cd manifest
 
@@ -171,3 +176,29 @@ stages:
 
       # Register/Update your service component with the Service Registry
       make package || exit 1
+
+      # Copy runtime dist to root and checkin
+      cp -v ./dist/libibmmanifest.tar.gz ${rootdir}
+      cd ${rootdir}
+
+      # Create .profile
+      echo "Creating $(pwd)/.profile"
+      cat >.profile <<EOL
+      function cegtools_activate {
+        if [ ! -f libibmmanifest.tar.gz ] ; then
+          echo "ERROR: could not find tarball libibmmanifest.tar.gz in current directory $(pwd)."
+          return 1
+        fi
+        mkdir -p cegtools
+        tar -C cegtools -xvzf libibmmanifest.tar.gz
+        rm -f libibmmanifest.tar.gz
+        # source the activation script, do not call it (in a sub-shell):
+        . ./cegtools/usr/bin/cfactivate.sh
+      }
+      cegtools_activate
+      EOL
+
+      git add ${rootdir}/libibmmanifest.tar.gz
+      git add ${rootdir}/.profile
+      git commit -m "Adding manifest runtime libraries"
+      git push origin ${RUNTIME_BRANCH}

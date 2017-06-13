@@ -35,6 +35,10 @@
         "manifest-repo-key": {
             "description": "Deployment key for the manifest runtime repo.",
             "type": "string"
+        },
+        "manifest-email": {
+            "description": "Team email address",
+            "type": "string"
         }
     },
     "required": [
@@ -44,7 +48,8 @@
         "manifest-bailey-url",
         "manifest-bailey-project",
         "manifest-customer-tickets",
-        "manifest-repo-key"
+        "manifest-repo-key",
+        "manifest-email"
     ],
     "form": [
         {
@@ -92,6 +97,12 @@
             "readonly": false,
             "title": "URL to Customer ticket service",
             "key": "manifest-customer-tickets"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Team email",
+            "key": "manifest-email"
         }
     ]
 }
