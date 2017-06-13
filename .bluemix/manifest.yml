@@ -198,6 +198,10 @@ stages:
       cegtools_activate
       EOL
 
+      set -x
+
+      git config user.email "${GIT_USER}@ibm.com"
+      git config user.name "${GIT_USER}"
       git add ${rootdir}/libibmmanifest.tar.gz
       git add ${rootdir}/.profile
       git commit -m "Adding manifest runtime libraries"
