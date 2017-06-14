@@ -58,10 +58,6 @@ stages:
       set -x
       export CF_APP_NAME="$CF_APP-staging"
 
-      # Set variables needed for the manifest
-      cf set-env $CF_APP_NAME CNAME staging
-      cf set-env $CF_APP_NAME REGION ${REGION_ID##*:}
-
       if ! cf app $CF_APP_NAME; then  
         cf push $CF_APP_NAME --no-start
       else
