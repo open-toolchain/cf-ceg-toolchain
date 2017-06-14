@@ -118,7 +118,10 @@ stages:
     type: text
   - name: DOMAIN
     value: ''
-    type: text    
+    type: text
+  - name: REGION_ID
+    value: ${PROD_REGION_ID}
+    type: text
   jobs:
   - name: Deploy Dark
     type: deployer
@@ -140,7 +143,7 @@ stages:
       cf push $TEMP_APP_NAME --no-start
 
       # Set variables needed for the manifest
-      cf set-env $TEMP_APP_NAME CNAME staging
+      cf set-env $TEMP_APP_NAME CNAME bluemix
       cf set-env $TEMP_APP_NAME REGION ${REGION_ID##*:}
 
       # cf set-env $TEMP_APP_NAME some_variable some_value
