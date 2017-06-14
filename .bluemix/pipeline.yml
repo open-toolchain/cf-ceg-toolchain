@@ -83,8 +83,8 @@ stages:
       #cf logs "${CF_APP}" --recent
 
       # Set variables needed for the manifest
-      cf set-env $CF_APP_NAME CNAME staging
-      cf set-env $CF_APP_NAME REGION ${REGION_ID##*:}
+      cf set-env ${CF_APP_NAME} CNAME staging
+      cf set-env ${CF_APP_NAME} REGION ${REGION_ID##*:}
       cf start ${CF_APP_NAME}
 
 - name: PROD
