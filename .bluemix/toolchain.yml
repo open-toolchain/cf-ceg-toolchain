@@ -11,6 +11,7 @@ template:
   required:
     - sample-build
     - sample-repo
+    - manifest-clone
   info:
     git url: >-
       [https://github.com/open-toolchain/cf-starter-wwghe-toolchain](https://github.com/open-toolchain/cf-starter-wwghe-toolchain)
@@ -51,6 +52,31 @@ services:
           PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
         execute: true
+  manifest-clone:
+    service_id: pipeline
+    parameters:
+      services:
+        - sample-repo
+      name: Manifest Libraires
+      ui-pipeline: false
+      configuration:
+        content:
+          $ref: manifest.yml
+          $refType: text
+        env:
+          SAMPLE_REPO: sample-repo
+          GIT_USER: '{{toolchain.name}}'
+          RUNTIME_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
+          RUNTIME_REPO_KEY: '{{form.customtool.parameters.manifest-repo-key}}'
+          MANIFEST_SERVICE: '{{form.customtool.parameters.manifest-service-name}}'
+          MANIFEST_COMPONENT: '{{form.pipeline.parameters.prod-app-name}}'
+          MANIFEST_PD: '{{form.customtool.parameters.manifest-pager-duty}}'
+          MANIFEST_REPO: '{{services.sample-repo.parameters.repo_url}}'
+          MANIFEST_BAILEY_URL: '{{form.customtool.parameters.manifest-bailey-url}}'
+          MANIFEST_BAILEY_PROJ: '{{form.customtool.parameters.manifest-bailey-project}}'
+          MANIFEST_CUSTOMER_URL: '{{form.customtool.parameters.manifest-customer-tickets}}'
+          MANIFEST_EMAIL: '{{form.customtool.parameters.manifest-email}}'
+        execute: true
   webide:
     service_id: orion
   messaging:
@@ -74,7 +100,7 @@ services:
   servicecontract:
     service_id: customtool
     parameters:
-      type: Watson Cloud Service Contract
+      type: Watson Cloud Playbook
       lifecyclePhase: "CULTURE"
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
       documentationUrl: https://pages.github.ibm.com/CloudEngineering/service_contract/
@@ -93,3 +119,16 @@ form:
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
     schema:
       $ref: deploy.json
+  customtool:
+    parameters:
+      type: Manifest Runtime Libraries
+      name: Manifest Runtime Libraries
+      lifecyclePhase: "DELIVER"
+      imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
+      documentationUrl: https://pages.github.ibm.com/CloudEngineering/service_contract/
+      manifest-service-name: '{{toolchain.name}}'
+      manifest-pager-duty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
+      manifest-bailey-url: https://w3bailey.isie.ibmcloud.com/
+      manifest-bailey-project: '{{toolchain.name}}'    
+    schema:
+      $ref: manifest.json

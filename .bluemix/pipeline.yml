@@ -40,6 +40,9 @@ stages:
   - name: BUILD_PREFIX
     value: master
     type: text
+  - name: REGION_ID
+    value: ${STAGING_REGION_ID}
+    type: text
   jobs:
   - name: Rolling Deploy
     type: deployer
@@ -51,9 +54,12 @@ stages:
     script: |
       #!/bin/bash
       # Push app
+
+      set -x
       export CF_APP_NAME="$CF_APP-staging"
+
       if ! cf app $CF_APP_NAME; then  
-        cf push $CF_APP_NAME
+        cf push $CF_APP_NAME --no-start
       else
         old_cf_app_name=${CF_APP_NAME}-OLD-$(date +"%s")
         rollback() {
@@ -68,13 +74,19 @@ stages:
         set -e
         trap rollback ERR
         cf rename $CF_APP_NAME $old_cf_app_name
-        cf push $CF_APP_NAME
+        cf push $CF_APP_NAME --no-start
         cf delete $old_cf_app_name -f
       fi
       # Export app name and URL for use in later Pipeline jobs
       export APP_URL=http://$(cf app $CF_APP_NAME | grep urls: | awk '{print $2}')
       # View logs
       #cf logs "${CF_APP}" --recent
+
+      # Set variables needed for the manifest
+      cf set-env ${CF_APP_NAME} CNAME staging
+      cf set-env ${CF_APP_NAME} REGION ${REGION_ID##*:}
+      cf start ${CF_APP_NAME}
+
 - name: PROD
   inputs:
   - type: job
@@ -106,7 +118,10 @@ stages:
     type: text
   - name: DOMAIN
     value: ''
-    type: text    
+    type: text
+  - name: REGION_ID
+    value: ${PROD_REGION_ID}
+    type: text
   jobs:
   - name: Deploy Dark
     type: deployer
@@ -126,6 +141,11 @@ stages:
       export TEMP_APP_NAME="${CF_APP_NAME}-${BUILD_NUMBER}-$(date +%s)"
       echo "Pushing new app:$TEMP_APP_NAME"
       cf push $TEMP_APP_NAME --no-start
+
+      # Set variables needed for the manifest
+      cf set-env $TEMP_APP_NAME CNAME bluemix
+      cf set-env $TEMP_APP_NAME REGION ${REGION_ID##*:}
+
       # cf set-env $TEMP_APP_NAME some_variable some_value
       cf start $TEMP_APP_NAME
       cf apps | grep $TEMP_APP_NAME

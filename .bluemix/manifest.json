@@ -1,0 +1,117 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "messages": {
+        "$i18n": "locales.yml"
+    },
+    "title": {
+        "$ref": "#/messages/sc.title"
+    },
+    "description": {
+        "$ref": "#/messages/sc.description"
+    },
+    "longDescription": {
+        "$ref": "#/messages/sc.longDescription"
+    },
+    "type": "object",
+    "properties": {
+        "manifest-service-name": {
+            "description": {
+                "$ref": "#/messages/sc.manifestServiceName"
+            },
+            "type": "string"
+        },
+        "manifest-pager-duty": {
+            "description": {
+                "$ref": "#/messages/sc.manifestPagerDuty"
+            },
+            "type": "string"
+        },
+        "manifest-bailey-url": {
+            "description": {
+                "$ref": "#/messages/sc.manifestBaileyURL"
+            },
+            "type": "string"
+        },
+        "manifest-bailey-project": {
+            "description": {
+                "$ref": "#/messages/sc.manifestBaileyName"
+            },
+            "type": "string"
+        },
+        "manifest-customer-tickets": {
+            "description": {
+                "$ref": "#/messages/sc.manifestCustomerTickets"
+            },
+            "type": "string"
+        },
+        "manifest-repo-key": {
+            "description": {
+                "$ref": "#/messages/sc.manifestKey"
+            },
+            "type": "string"
+        },
+        "manifest-email": {
+            "description": {
+                "$ref": "#/messages/sc.manifestEmail"
+            },
+            "type": "string"
+        }
+    },
+    "required": [
+        "manifest-service-name",
+        "manifest-pager-duty",
+        "manifest-bailey-url",
+        "manifest-bailey-project",
+        "manifest-customer-tickets",
+        "manifest-repo-key",
+        "manifest-email"
+    ],
+    "form": [
+        {
+            "type": "validator",
+            "url": "/devops/setup/bm-helper/helper.html"
+        },
+        {
+            "type": "password",
+            "readonly": false,
+            "title": "manifest-runtime Repo Key",
+            "key": "manifest-repo-key"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Service name",
+            "key": "manifest-service-name"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "PagerDuty Escalation Policy URL",
+            "key": "manifest-pager-duty"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Bailey URL",
+            "key": "manifest-bailey-url"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Bailey Project",
+            "key": "manifest-bailey-project"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Customer Ticket URL",
+            "key": "manifest-customer-tickets"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Development Team Email",
+            "key": "manifest-email"
+        }
+    ]
+}
