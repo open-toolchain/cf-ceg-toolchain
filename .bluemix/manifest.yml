@@ -93,9 +93,6 @@ stages:
 
       set -x
 
-      repo_url=`git remote get-url --push origin`
-      echo $repo_url
-
       git config user.email "${GIT_USER}@ibm.com"
       git config user.name "${GIT_USER}"
 
@@ -163,7 +160,6 @@ stages:
     script: |-
       #!/bin/bash
 
-      exit 1
       set -x
       export REGISTRYHOST=serviceregistry.stage1.ng.bluemix.net
 
