@@ -151,7 +151,7 @@ stages:
       git add manifest/res/servicemanifest.json
       git commit -m "Adding Service Manifest file"
       git push origin ${RUNTIME_BRANCH}
-  - name: Deploy
+  - name: Register Manifest
     type: deployer
     target:
       region_id: ibm:ys1:us-south
