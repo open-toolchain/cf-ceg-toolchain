@@ -6,6 +6,9 @@ stages:
     branch: master
     service: ${SAMPLE_REPO}
     dir_name: null
+  triggers:
+    - type: commit
+      enabled: false
   properties:
   - name: RUNTIME_BRANCH
     value: add-sc-runtime
