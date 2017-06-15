@@ -71,9 +71,6 @@ stages:
   - name: MANIFEST_PD
     value: ${MANIFEST_PD}
     type: text
-  - name: MANIFEST_REPO
-    value: ${MANIFEST_REPO}
-    type: text
   - name: MANIFEST_BAILEY_URL
     value: ${MANIFEST_BAILEY_URL}
     type: text
@@ -95,6 +92,10 @@ stages:
 
       git config user.email "${GIT_USER}@ibm.com"
       git config user.name "${GIT_USER}"
+
+      # build the URL to the created GIT repository
+      remote=`git remote show -n origin | grep Fetch | awk '{print $3}'`
+      repo_url="https://${remote#*@}"
 
       rootdir=${PWD}
 
@@ -121,7 +122,7 @@ stages:
       manifest.team_email = '${MANIFEST_EMAIL}';
       manifest.bailey_url = '${MANIFEST_BAILEY_URL}';
       manifest.bailey_project = '${MANIFEST_BAILEY_PROJ}';
-      manifest.repo_url = '${MANIFEST_REPO}';
+      manifest.repo_url = '${repo_url}';
       manifest.bluemix_account = '';
       manifest.component_instance = '\$env(\'CF_INSTANCE_GUID\')';
 
@@ -150,7 +151,7 @@ stages:
       git add manifest/res/servicemanifest.json
       git commit -m "Adding Service Manifest file"
       git push origin ${RUNTIME_BRANCH}
-  - name: Deploy
+  - name: Register Manifest
     type: deployer
     target:
       region_id: ibm:ys1:us-south
