@@ -68,7 +68,7 @@ services:
           GIT_USER: '{{toolchain.name}}'
           RUNTIME_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
           RUNTIME_REPO_KEY: '{{form.customtool.parameters.manifest-repo-key}}'
-          MANIFEST_SERVICE: '{{form.customtool.parameters.manifest-service-name}}'
+          MANIFEST_SERVICE: '{{services.sample-repo.parameters.clone_url}}'
           MANIFEST_COMPONENT: '{{form.pipeline.parameters.prod-app-name}}'
           MANIFEST_PD: '{{form.customtool.parameters.manifest-pager-duty}}'
           MANIFEST_REPO: '{{services.sample-repo.parameters.repo_url}}'
@@ -126,7 +126,7 @@ form:
       lifecyclePhase: "DELIVER"
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
       documentationUrl: https://pages.github.ibm.com/CloudEngineering/service_contract/
-      manifest-service-name: '{{services.sample-repo.parameters.repo_name}}'
+      manifest-service-name: '{{toolchain.name}}'
       manifest-pager-duty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
       manifest-bailey-url: https://w3bailey.isie.ibmcloud.com/
       manifest-bailey-project: '{{toolchain.name}}'    
