@@ -126,7 +126,7 @@ form:
       lifecyclePhase: "DELIVER"
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
       documentationUrl: https://pages.github.ibm.com/CloudEngineering/service_contract/
-      manifest-service-name: '{{toolchain.name}}'
+      manifest-service-name: '{{services.sample-repo.parameters.repo_url}}'
       manifest-pager-duty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
       manifest-bailey-url: https://w3bailey.isie.ibmcloud.com/
       manifest-bailey-project: '{{toolchain.name}}'    
