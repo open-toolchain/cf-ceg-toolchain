@@ -10,6 +10,8 @@ This template will configure a toolchain that can:
 * track code deployments back to GHE commits and issues
 * notify about delivery process in Slack
 * allows to edit code online with WebIDE (but you can use desktop tools at your preference)
+* enable the required 
+runtime libraries for the Watson Cloud Engineering Service Contract
 
 ### To get started, click **Create toolchain**.
 
@@ -25,3 +27,36 @@ This template will configure a toolchain that can:
 * [Toolchains on the Bluemix Garage Method site](https://www.ibm.com/devops/method/category/tools)
 * Blog: [Bluemix Continuous Delivery is now live](https://www.ibm.com/blogs/bluemix/2016/11/bluemix-continuous-delivery-is-now-live/)
 * Video: [Introducing IBM Bluemix Continuous Delivery](https://www.youtube.com/watch?v=QPSAZ64APpc&feature=youtu.be) (2m12s)
+
+---
+
+## Working with the Runtime Libraries - Manifest Runtime
+
+* Learn about the [Watson Cloud Engineering Playbook](https://pages.github.ibm.com/the-playbook/index.html)
+* Learn about the [Service Contract](https://pages.github.ibm.com/CloudEngineering/service_contract/)
+
+### How the integration works
+
+The Cloud Engineering Guild provides a set of runtime libraries that are used to verify that the different elements in the Service Contract are in place.
+
+This integration is added to your toolchain and enabled in your application as follows:
+
+#### Manifest Runtime Libraries
+* A second pipeline is created to add, in a new branch, the required libraries to your repository.
+    > Note that the pipeline must be run manually.  You can change this to run automatically if needed however you will need to merget he changes to the `master` branch before they are enabled for your application.
+
+* The runtime manifest template is generated and customized for your application
+* All the changes are added as a new branch.  All you need to do is create and merge the pull request
+
+#### Your application
+After the new branch is merged, your application will now contain the following:
+  * `manifest` directory with the required files
+  * `libibmmanifest.tar.gz` which contains the compiled files
+  * `.profile` used to enable the objects when your application is launched
+
+Most of the properties usedin the mainifest are derived from your applicaton and toolchain names.  Those can be updated **before** creating your toolchain.  The property `REGION_ID` used in the `STAGING` and `PROD` stages of your pipeline needs to match the region your application is being deployed to.
+
+#### Keeping the runtime libraries updated
+Periodically, the Cloud Engineering Guild will update the runtime libraries and you will need to incorporate them into your build and deploy process.
+
+You can run the `Manifest Runtime` pipeline to add the new changes to your repository.  Simply run the pipeline, create a pull request, and merge into your application.
