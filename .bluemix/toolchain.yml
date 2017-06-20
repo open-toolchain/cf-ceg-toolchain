@@ -65,7 +65,6 @@ services:
           $refType: text
         env:
           SAMPLE_REPO: sample-repo
-          GIT_USER: '{{toolchain.name}}'
           RUNTIME_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
           RUNTIME_REPO_KEY: '{{form.customtool.parameters.manifest-repo-key}}'
           MANIFEST_SERVICE: '{{form.customtool.parameters.manifest-service-name}}'

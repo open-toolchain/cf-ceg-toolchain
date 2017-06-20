@@ -15,12 +15,12 @@ stages:
     type: text
   - name: REPO_KEY
     value: ${RUNTIME_REPO_KEY}
-    type: text
+    type: secure
   - name: RUNTIME_REPO
     value: ${RUNTIME_REPO}
     type: text
-  - name: GIT_USER
-    value: ${GIT_USER}
+  - name: MANIFEST_EMAIL
+    value: ${MANIFEST_EMAIL}
     type: text
   jobs:
   - name: Add Runtime
@@ -32,20 +32,32 @@ stages:
 
       set -x      
 
-      git config user.email "${GIT_USER}@ibm.com"
-      git config user.name "${GIT_USER}"
+      git config user.email "${MANIFEST_EMAIL}"
+      git config user.name "Added by CD Pipeline"
 
       # Add deploy key to GIT repo url by replacing // with //<key>@
       git_repo="${RUNTIME_REPO/\/\//\/\/${REPO_KEY}@}"
       git remote add manifest-runtime-production ${git_repo}
 
+      # make branch available to all stages
+      export RUNTIME_BRANCH=${RUNTIME_BRANCH}
+      
       # we want to check into a dedicated branch
       git checkout -b ${RUNTIME_BRANCH}
 
       # git subtree add triggers a background commit if there are changes available
-      git subtree add --prefix=manifest manifest-runtime-production master -m "Add manifest-runtime-production content" --squash
+      # check to see if the subtree "manifest" exists.  If not, then add it. If it exists, just pull
+      # new sources
+      if [ "$(git log | grep git-subtree-dir | grep manifest)" ]
+      then
+        echo "Subtree exists - pulling changes."
+        git subtree pull --prefix=manifest manifest-runtime-production master -m "Pull manifest-runtime-production updates" --squash
+      else
+        echo "Manifest subtree missing - adding subtree"
+        git subtree add --prefix=manifest manifest-runtime-production master -m "Add manifest-runtime-production content" --squash
+      fi
 
-      # push into dedicated branch
+      # Push any changes
       git push origin ${RUNTIME_BRANCH}
 - name: Create base manifest
   inputs:
@@ -56,12 +68,6 @@ stages:
   triggers:
   - type: stage
   properties:
-  - name: RUNTIME_BRANCH
-    value: add-sc-runtime
-    type: text
-  - name: GIT_USER
-    value: ${GIT_USER}
-    type: text
   - name: MANIFEST_SERVICE
     value: ${MANIFEST_SERVICE}
     type: text
@@ -90,19 +96,37 @@ stages:
 
       set -x
 
-      git config user.email "${GIT_USER}@ibm.com"
-      git config user.name "${GIT_USER}"
+      # check if the required properties are set
+      required=("MANIFEST_SERVICE" \
+      "MANIFEST_COMPONENT" \
+      "MANIFEST_PD" \
+      "MANIFEST_EMAIL" \
+      "MANIFEST_BAILEY_URL" \
+      "MANIFEST_BAILEY_PROJ")
+
+      for v in "${required[@]}"; do
+        if [ -z "${!v}" ]; then 
+            echo Required property [ $v ] is not set or is empty
+            exit 1
+        fi
+      done;
+
+      git config user.email "${MANIFEST_EMAIL}"
+      git config user.name "Added by CD Pipeline"
 
       # build the URL to the created GIT repository
       remote=`git remote show -n origin | grep Fetch | awk '{print $3}'`
       repo_url="https://${remote#*@}"
 
       rootdir=${PWD}
-
       manifest_template=servicemanifest.json
 
       cd manifest
-      make generate
+      # if the manifest does not exist - generate the template
+      if [ ! -f ./res/servicemanifest.json ]; then
+        echo "Manifest does not exist. Generating template"
+        make generate
+      fi
 
       cd res
       node > out_${manifest_template} <<EOF
@@ -146,11 +170,16 @@ stages:
       # Move the file to checkin
       mv out_${manifest_template} ${manifest_template}
 
-      # Add the updated manifest
-      cd ${rootdir}
-      git add manifest/res/servicemanifest.json
-      git commit -m "Adding Service Manifest file"
-      git push origin ${RUNTIME_BRANCH}
+      # check for changes and push if needed
+      if [ "$(git status --porcelain | grep manifest)" ]; 
+      then
+        git add ./${manifest_template}
+        git commit -m "Adding Service Manifest file"
+        git push origin ${RUNTIME_BRANCH}
+      else
+        # nothing to push
+        exit 0
+      fi
   - name: Register Manifest
     type: deployer
     target:
@@ -190,7 +219,7 @@ stages:
       cat >.profile <<EOL
       function cegtools_activate {
         if [ ! -f libibmmanifest.tar.gz ] ; then
-          echo "ERROR: could not find tarball libibmmanifest.tar.gz in current directory $(pwd)."
+          echo "ERROR: could not find tarball libibmmanifest.tar.gz."
           return 1
         fi
         mkdir -p cegtools
@@ -204,8 +233,8 @@ stages:
 
       set -x
 
-      git config user.email "${GIT_USER}@ibm.com"
-      git config user.name "${GIT_USER}"
+      git config user.email "${MANIFEST_EMAIL}"
+      git config user.name "Added by CD Pipeline"
       git add ${rootdir}/libibmmanifest.tar.gz
       git add ${rootdir}/.profile
       git commit -m "Adding manifest runtime libraries"
