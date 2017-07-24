@@ -74,8 +74,8 @@ stages:
   - name: MANIFEST_COMPONENT
     value: ${MANIFEST_COMPONENT}
     type: text
-  - name: MANIFEST_PD
-    value: ${MANIFEST_PD}
+  - name: MANIFEST_PAGERDUTY
+    value: ${MANIFEST_PAGERDUTY}
     type: text
   - name: MANIFEST_BAILEY_URL
     value: ${MANIFEST_BAILEY_URL}
@@ -99,7 +99,7 @@ stages:
       # check if the required properties are set
       required=("MANIFEST_SERVICE" \
       "MANIFEST_COMPONENT" \
-      "MANIFEST_PD" \
+      "MANIFEST_PAGERDUTY" \
       "MANIFEST_EMAIL" \
       "MANIFEST_BAILEY_URL" \
       "MANIFEST_BAILEY_PROJ")
@@ -142,7 +142,7 @@ stages:
       manifest.region = '\$env(\'REGION\')';
       manifest.resource_type = 'cf-application';
       manifest.tenancy = 'shared';
-      manifest.pager_duty = '${MANIFEST_PD}';
+      manifest.pager_duty = '${MANIFEST_PAGERDUTY}';
       manifest.team_email = '${MANIFEST_EMAIL}';
       manifest.bailey_url = '${MANIFEST_BAILEY_URL}';
       manifest.bailey_project = '${MANIFEST_BAILEY_PROJ}';
