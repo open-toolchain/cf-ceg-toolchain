@@ -61,7 +61,7 @@ services:
       ui-pipeline: false
       configuration:
         content:
-          $ref: manifest.yml
+          $ref: manifest-pipeline.yml
           $refType: text
         env:
           SAMPLE_REPO: sample-repo
