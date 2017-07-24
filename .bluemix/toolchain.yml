@@ -79,6 +79,8 @@ services:
     service_id: orion
   messaging:
     service_id: slack
+  pagerduty:
+    service_id: pagerduty
   insights:
     service_id: draservicebroker  
     parameters:
