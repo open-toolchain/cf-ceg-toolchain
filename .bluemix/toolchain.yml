@@ -14,9 +14,9 @@ template:
     - manifest-clone
   info:
     git url: >-
-      [https://github.com/open-toolchain/cf-starter-wwghe-toolchain](https://github.com/open-toolchain/cf-starter-wwghe-toolchain)
+      [https://github.com/open-toolchain/cf-ceg-toolchain](https://github.com/open-toolchain/cf-ceg-toolchain)
     git branch: >-
-      [master](https://github.com/open-toolchain/cf-starter-wwghe-toolchain/tree/master)
+      [master](https://github.com/open-toolchain/cf-ceg-toolchain/tree/master)
 toolchain:
   name: 'wwater-toolchain-{{timestamp}}'
   template:
