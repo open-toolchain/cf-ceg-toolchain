@@ -69,7 +69,7 @@ services:
           RUNTIME_REPO_KEY: '{{form.customtool.parameters.manifest-repo-key}}'
           MANIFEST_SERVICE: '{{form.customtool.parameters.manifest-service-name}}'
           MANIFEST_COMPONENT: '{{form.pipeline.parameters.prod-app-name}}'
-          MANIFEST_PD: '{{form.customtool.parameters.manifest-pager-duty}}'
+          MANIFEST_PAGERDUTY: '{{form.customtool.parameters.manifest-pagerduty}}'
           MANIFEST_BAILEY_URL: '{{form.customtool.parameters.manifest-bailey-url}}'
           MANIFEST_BAILEY_PROJ: '{{form.customtool.parameters.manifest-bailey-project}}'
           MANIFEST_CUSTOMER_URL: '{{form.customtool.parameters.manifest-customer-tickets}}'
@@ -127,7 +127,7 @@ form:
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
       documentationUrl: https://pages.github.ibm.com/CloudEngineering/service_contract/
       manifest-service-name: '{{toolchain.name}}'
-      manifest-pager-duty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
+      manifest-pagerduty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
       manifest-bailey-url: https://w3bailey.isie.ibmcloud.com/
       manifest-bailey-project: '{{toolchain.name}}'    
     schema:

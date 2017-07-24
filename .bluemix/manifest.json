@@ -20,7 +20,7 @@
             },
             "type": "string"
         },
-        "manifest-pager-duty": {
+        "manifest-pagerduty": {
             "description": {
                 "$ref": "#/messages/sc.manifestPagerDuty"
             },
@@ -59,7 +59,7 @@
     },
     "required": [
         "manifest-service-name",
-        "manifest-pager-duty",
+        "manifest-pagerduty",
         "manifest-bailey-url",
         "manifest-bailey-project",
         "manifest-customer-tickets",
@@ -87,7 +87,7 @@
             "type": "text",
             "readonly": false,
             "title": "PagerDuty Escalation Policy URL",
-            "key": "manifest-pager-duty"
+            "key": "manifest-pagerduty"
         },
         {
             "type": "text",
