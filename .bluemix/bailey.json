@@ -13,7 +13,7 @@
         },
         "baileyProject": {
             "description": {
-                "$ref": "#/messages/bailey.ProjectDescription"
+                "$ref": "#/messages/bailey.projectDescription"
             },
             "type": "string",
             "pattern": "\\S"
