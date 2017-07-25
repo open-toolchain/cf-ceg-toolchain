@@ -26,7 +26,7 @@
             },
             "type": "string"
         },
-        "manifest-customer-tickets": {
+        "manifest-customer-url": {
             "description": {
                 "$ref": "#/messages/sc.manifestCustomerTickets"
             },
@@ -48,7 +48,7 @@
     "required": [
         "manifest-service-name",
         "manifest-pagerduty",
-        "manifest-customer-tickets",
+        "manifest-customer-url",
         "manifest-repo-key",
         "manifest-email"
     ],
@@ -79,7 +79,7 @@
             "type": "text",
             "readonly": false,
             "title": "Customer Ticket URL",
-            "key": "manifest-customer-tickets"
+            "key": "manifest-customer-url"
         },
         {
             "type": "text",

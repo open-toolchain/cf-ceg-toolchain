@@ -72,7 +72,7 @@ services:
           MANIFEST_PAGERDUTY: '{{form.customtool_manifest-clone.parameters.manifest-pagerduty}}'
           MANIFEST_BAILEY_URL: '{{form.customtool_bailey.parameters.baileyUrl}}'
           MANIFEST_BAILEY_PROJ: '{{form.customtool_bailey.parameters.baileyProject}}'
-          MANIFEST_CUSTOMER_URL: '{{form.customtool_manifest-clone.parameters.manifest-customer-tickets}}'
+          MANIFEST_CUSTOMER_URL: '{{form.customtool_manifest-clone.parameters.manifest-customer-url}}'
           MANIFEST_EMAIL: '{{form.customtool_manifest-clone.parameters.manifest-email}}'
         execute: true
   webide:
