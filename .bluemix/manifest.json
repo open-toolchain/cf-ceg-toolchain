@@ -26,18 +26,6 @@
             },
             "type": "string"
         },
-        "manifest-bailey-url": {
-            "description": {
-                "$ref": "#/messages/sc.manifestBaileyURL"
-            },
-            "type": "string"
-        },
-        "manifest-bailey-project": {
-            "description": {
-                "$ref": "#/messages/sc.manifestBaileyName"
-            },
-            "type": "string"
-        },
         "manifest-customer-tickets": {
             "description": {
                 "$ref": "#/messages/sc.manifestCustomerTickets"
@@ -60,8 +48,6 @@
     "required": [
         "manifest-service-name",
         "manifest-pagerduty",
-        "manifest-bailey-url",
-        "manifest-bailey-project",
         "manifest-customer-tickets",
         "manifest-repo-key",
         "manifest-email"
@@ -88,18 +74,6 @@
             "readonly": false,
             "title": "PagerDuty Escalation Policy URL",
             "key": "manifest-pagerduty"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Bailey URL",
-            "key": "manifest-bailey-url"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Bailey Project",
-            "key": "manifest-bailey-project"
         },
         {
             "type": "text",
