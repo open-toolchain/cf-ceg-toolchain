@@ -24,8 +24,7 @@
             "description": {
                 "$ref": "#/messages/bailey.projectDescription"
             },
-            "type": "string",
-            "pattern": "\\S"
+            "type": "string"
         }
     },
     "required": [
