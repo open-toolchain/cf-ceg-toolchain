@@ -125,8 +125,6 @@ form:
       dashboard_url: https://w3bailey.isie.ibmcloud.com/
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
       documentationUrl: https://w3bailey.isie.ibmcloud.com/help
-      description:
-        $ref: "#/messages/bailey.description"
       baileyUrl: https://w3bailey.isie.ibmcloud.com
     schema:
       $ref: bailey.json

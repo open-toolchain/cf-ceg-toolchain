@@ -3,6 +3,15 @@
     "messages": {
         "$i18n": "locales.yml"
     },
+    "title": {
+        "$ref": "#/messages/bailey.title"
+    },
+    "description": {
+        "$ref": "#/messages/bailey.description"
+    },
+    "longDescription": {
+        "$ref": "#/messages/bailey.longDescription"
+    },
     "type": "object",
     "properties": {
         "baileyUrl": {
