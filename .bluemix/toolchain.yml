@@ -96,7 +96,6 @@ services:
       name: Tools, Practices, Courses
       dashboard_url: https://whitewater.ibm.com/
       description: Equip product and service teams with practical resources so they can get to better outcomes, faster.
-      additional-properties:
   servicecontract:
     service_id: customtool
     parameters:
@@ -108,21 +107,11 @@ services:
       dashboard_url: https://pages.github.ibm.com/the-playbook/index.html
       description: 
         $ref: "#/messages/sc.toolDescription"
-      additional-properties:
   bailey:
     service_id: customtool
     parameters:
-      type: Bluemix Platform Incident Management
-      lifecyclePhase: "MANAGE"
-      imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
-      documentationUrl: https://w3bailey.isie.ibmcloud.com/help
-      name: Bailey - Cloud Service Management
-      dashboard_url: https://w3bailey.isie.ibmcloud.com/
       description:
         $ref: "#/messages/bailey.description"
-      addtional-properties:
-
-
 form:
   pipeline:
     parameters:
@@ -135,6 +124,12 @@ form:
       $ref: deploy.json
   customtool_bailey:
     parameters:
+      type: Bluemix Platform Incident Management
+      name: Bailey
+      lifecyclePhase: "MANAGE"
+      dashboard_url: https://w3bailey.isie.ibmcloud.com/
+      imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
+      documentationUrl: https://w3bailey.isie.ibmcloud.com/help
       baileyUrl: https://w3bailey.isie.ibmcloud.com
     schema:
       $ref: bailey.json
@@ -147,7 +142,5 @@ form:
       documentationUrl: https://pages.github.ibm.com/CloudEngineering/service_contract/
       manifest-service-name: '{{toolchain.name}}'
       manifest-pagerduty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
-      manifest-bailey-url: https://w3bailey.isie.ibmcloud.com/
-      manifest-bailey-project: '{{toolchain.name}}'    
     schema:
       $ref: manifest.json
