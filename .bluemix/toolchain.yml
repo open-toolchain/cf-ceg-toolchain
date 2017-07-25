@@ -119,7 +119,7 @@ form:
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
     schema:
       $ref: deploy.json
-  customtool:
+  customtool_manifest-clone:
     parameters:
       type: Manifest Runtime Libraries
       name: Manifest Runtime Libraries
