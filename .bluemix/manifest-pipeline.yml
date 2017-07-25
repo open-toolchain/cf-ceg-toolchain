@@ -86,6 +86,9 @@ stages:
   - name: MANIFEST_EMAIL
     value: ${MANIFEST_EMAIL}
     type: text
+  - name: MANIFEST_CUSTOMER_URL
+    value: ${MANIFEST_CUSTOMER_URL}
+    type: text
   jobs:
   - name: Generate manifest
     type: builder
