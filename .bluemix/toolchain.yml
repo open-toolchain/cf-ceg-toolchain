@@ -119,8 +119,8 @@ form:
       $ref: deploy.json
   customtool_bailey:
     parameters:
-      type: Bluemix Incident Management
-      name: Bailey
+      type: Bailey
+      name: Bluemix Incident Management
       lifecyclePhase: "MANAGE"
       dashboard_url: https://w3bailey.isie.ibmcloud.com/
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
