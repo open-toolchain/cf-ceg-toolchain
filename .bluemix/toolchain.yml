@@ -12,6 +12,7 @@ template:
     - sample-build
     - sample-repo
     - manifest-clone
+    - bailey
   info:
     git url: >-
       [https://github.com/open-toolchain/cf-ceg-toolchain](https://github.com/open-toolchain/cf-ceg-toolchain)
@@ -107,6 +108,8 @@ services:
       dashboard_url: https://pages.github.ibm.com/the-playbook/index.html
       description: 
         $ref: "#/messages/sc.toolDescription"
+  bailey:
+    service_id: customtool
 form:
   pipeline:
     parameters:
