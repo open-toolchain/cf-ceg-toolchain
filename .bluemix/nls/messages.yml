@@ -32,3 +32,6 @@ sc.manifestBaileyName: "The name of the Bailey project for the service. Can be a
 sc.manifestCustomerTickets: "The URL to your Customer Tickets Repository.\n\nExample: `https://jazzop27.rtp.raleigh.ibm.com:9443/ourproject#action=com.ibm.team.dashboard.viewDashboard`"
 sc.manifestKey: "Token used to access the manifest-runtime repository.\n\nSee: https://github.ibm.com/CloudTools/manifest-runtime-production/blob/master/README.md"
 sc.manifestEmail: "The email address of the squad that builds and deploys the component."
+bailey.description: "Bailey is a multi tenant cloud service management tool that manages Root Cause Analysis (RCA)"
+bailey.urlDescription: "URL to Bailey project instance"
+bailey.projectDescription: "Name of your team's project within the Bailey tool"
