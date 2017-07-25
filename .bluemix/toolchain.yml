@@ -109,9 +109,6 @@ services:
         $ref: "#/messages/sc.toolDescription"
   bailey:
     service_id: customtool
-    parameters:
-      description:
-        $ref: "#/messages/bailey.description"
 form:
   pipeline:
     parameters:
@@ -124,12 +121,14 @@ form:
       $ref: deploy.json
   customtool_bailey:
     parameters:
-      type: Bluemix Platform Incident Management
+      type: Bluemix Incident Management
       name: Bailey
       lifecyclePhase: "MANAGE"
       dashboard_url: https://w3bailey.isie.ibmcloud.com/
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
       documentationUrl: https://w3bailey.isie.ibmcloud.com/help
+      description:
+        $ref: "#/messages/bailey.description"
       baileyUrl: https://w3bailey.isie.ibmcloud.com
     schema:
       $ref: bailey.json
