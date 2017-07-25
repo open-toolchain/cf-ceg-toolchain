@@ -102,7 +102,8 @@ stages:
       "MANIFEST_PAGERDUTY" \
       "MANIFEST_EMAIL" \
       "MANIFEST_BAILEY_URL" \
-      "MANIFEST_BAILEY_PROJ")
+      "MANIFEST_BAILEY_PROJ"\
+      "MANIFEST_CUSTOMER_URL")
 
       for v in "${required[@]}"; do
         if [ -z "${!v}" ]; then 
@@ -149,6 +150,7 @@ stages:
       manifest.repo_url = '${repo_url}';
       manifest.bluemix_account = '';
       manifest.component_instance = '\$env(\'CF_INSTANCE_GUID\')';
+      manifest.customer_ticket_repo_url = ${MANIFEST_CUSTOMER_URL};
 
       // Remove invalid data
       manifest.scope = '';
@@ -158,7 +160,6 @@ stages:
       manifest.bluemix_account_api_key_id = '';
       manifest.security_status_url = '';
       manifest.static_sec_analyze_url = '';
-      manifest.customer_ticket_repo_url = '';
       manifest.runbook_repo_url = '';
       manifest.continuity_plan_url = '';
 
