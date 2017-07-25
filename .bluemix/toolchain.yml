@@ -66,14 +66,14 @@ services:
         env:
           SAMPLE_REPO: sample-repo
           RUNTIME_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
-          RUNTIME_REPO_KEY: '{{form.customtool.parameters.manifest-repo-key}}'
-          MANIFEST_SERVICE: '{{form.customtool.parameters.manifest-service-name}}'
+          RUNTIME_REPO_KEY: '{{form.customtool_manifest-clone.parameters.manifest-repo-key}}'
+          MANIFEST_SERVICE: '{{form.customtool_manifest-clone.parameters.manifest-service-name}}'
           MANIFEST_COMPONENT: '{{form.pipeline.parameters.prod-app-name}}'
-          MANIFEST_PAGERDUTY: '{{form.customtool.parameters.manifest-pagerduty}}'
-          MANIFEST_BAILEY_URL: '{{form.customtool.parameters.manifest-bailey-url}}'
-          MANIFEST_BAILEY_PROJ: '{{form.customtool.parameters.manifest-bailey-project}}'
-          MANIFEST_CUSTOMER_URL: '{{form.customtool.parameters.manifest-customer-tickets}}'
-          MANIFEST_EMAIL: '{{form.customtool.parameters.manifest-email}}'
+          MANIFEST_PAGERDUTY: '{{form.customtool_manifest-clone.parameters.manifest-pagerduty}}'
+          MANIFEST_BAILEY_URL: '{{form.customtool_bailey.parameters.baileyUrl}}'
+          MANIFEST_BAILEY_PROJ: '{{form.customtool_bailey.parameters.baileyProject}}'
+          MANIFEST_CUSTOMER_URL: '{{form.customtool_manifest-clone.parameters.manifest-customer-tickets}}'
+          MANIFEST_EMAIL: '{{form.customtool_manifest-clone.parameters.manifest-email}}'
         execute: true
   webide:
     service_id: orion
@@ -109,6 +109,20 @@ services:
       description: 
         $ref: "#/messages/sc.toolDescription"
       additional-properties:
+  bailey:
+    service_id: customtool
+    parameters:
+      type: Bluemix Platform Incident Management
+      lifecyclePhase: "MANAGE"
+      imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
+      documentationUrl: https://w3bailey.isie.ibmcloud.com/help
+      name: Bailey - Cloud Service Management
+      dashboard_url: https://w3bailey.isie.ibmcloud.com/
+      description:
+        $ref: "#/messages/bailey.description"
+      addtional-properties:
+
+
 form:
   pipeline:
     parameters:
@@ -119,6 +133,11 @@ form:
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
     schema:
       $ref: deploy.json
+  customtool_bailey:
+    parameters:
+      baileyUrl: https://w3bailey.isie.ibmcloud.com
+    schema:
+      $ref: bailey.json
   customtool_manifest-clone:
     parameters:
       type: Manifest Runtime Libraries
