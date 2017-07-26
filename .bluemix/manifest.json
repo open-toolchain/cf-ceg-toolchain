@@ -20,25 +20,13 @@
             },
             "type": "string"
         },
-        "manifest-pager-duty": {
+        "manifest-pagerduty": {
             "description": {
                 "$ref": "#/messages/sc.manifestPagerDuty"
             },
             "type": "string"
         },
-        "manifest-bailey-url": {
-            "description": {
-                "$ref": "#/messages/sc.manifestBaileyURL"
-            },
-            "type": "string"
-        },
-        "manifest-bailey-project": {
-            "description": {
-                "$ref": "#/messages/sc.manifestBaileyName"
-            },
-            "type": "string"
-        },
-        "manifest-customer-tickets": {
+        "manifest-customer-url": {
             "description": {
                 "$ref": "#/messages/sc.manifestCustomerTickets"
             },
@@ -59,10 +47,8 @@
     },
     "required": [
         "manifest-service-name",
-        "manifest-pager-duty",
-        "manifest-bailey-url",
-        "manifest-bailey-project",
-        "manifest-customer-tickets",
+        "manifest-pagerduty",
+        "manifest-customer-url",
         "manifest-repo-key",
         "manifest-email"
     ],
@@ -87,25 +73,13 @@
             "type": "text",
             "readonly": false,
             "title": "PagerDuty Escalation Policy URL",
-            "key": "manifest-pager-duty"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Bailey URL",
-            "key": "manifest-bailey-url"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Bailey Project",
-            "key": "manifest-bailey-project"
+            "key": "manifest-pagerduty"
         },
         {
             "type": "text",
             "readonly": false,
             "title": "Customer Ticket URL",
-            "key": "manifest-customer-tickets"
+            "key": "manifest-customer-url"
         },
         {
             "type": "text",

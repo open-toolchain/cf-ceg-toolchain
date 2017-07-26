@@ -11,12 +11,13 @@ template:
   required:
     - sample-build
     - sample-repo
-    - manifest-clone
+    - customtool_manifest-clone
+    - customtool_bailey
   info:
     git url: >-
-      [https://github.com/open-toolchain/cf-starter-wwghe-toolchain](https://github.com/open-toolchain/cf-starter-wwghe-toolchain)
+      [https://github.com/open-toolchain/cf-ceg-toolchain](https://github.com/open-toolchain/cf-ceg-toolchain)
     git branch: >-
-      [master](https://github.com/open-toolchain/cf-starter-wwghe-toolchain/tree/master)
+      [master](https://github.com/open-toolchain/cf-ceg-toolchain/tree/master)
 toolchain:
   name: 'wwater-toolchain-{{timestamp}}'
   template:
@@ -61,24 +62,26 @@ services:
       ui-pipeline: false
       configuration:
         content:
-          $ref: manifest.yml
+          $ref: manifest-pipeline.yml
           $refType: text
         env:
           SAMPLE_REPO: sample-repo
           RUNTIME_REPO: https://github.ibm.com/CloudTools/manifest-runtime-production
-          RUNTIME_REPO_KEY: '{{form.customtool.parameters.manifest-repo-key}}'
-          MANIFEST_SERVICE: '{{form.customtool.parameters.manifest-service-name}}'
+          RUNTIME_REPO_KEY: '{{form.customtool_manifest-clone.parameters.manifest-repo-key}}'
+          MANIFEST_SERVICE: '{{form.customtool_manifest-clone.parameters.manifest-service-name}}'
           MANIFEST_COMPONENT: '{{form.pipeline.parameters.prod-app-name}}'
-          MANIFEST_PD: '{{form.customtool.parameters.manifest-pager-duty}}'
-          MANIFEST_BAILEY_URL: '{{form.customtool.parameters.manifest-bailey-url}}'
-          MANIFEST_BAILEY_PROJ: '{{form.customtool.parameters.manifest-bailey-project}}'
-          MANIFEST_CUSTOMER_URL: '{{form.customtool.parameters.manifest-customer-tickets}}'
-          MANIFEST_EMAIL: '{{form.customtool.parameters.manifest-email}}'
+          MANIFEST_PAGERDUTY: '{{form.customtool_manifest-clone.parameters.manifest-pagerduty}}'
+          MANIFEST_BAILEY_URL: '{{form.customtool_bailey.parameters.baileyUrl}}'
+          MANIFEST_BAILEY_PROJ: '{{form.customtool_bailey.parameters.baileyProject}}'
+          MANIFEST_CUSTOMER_URL: '{{form.customtool_manifest-clone.parameters.manifest-customer-url}}'
+          MANIFEST_EMAIL: '{{form.customtool_manifest-clone.parameters.manifest-email}}'
         execute: true
   webide:
     service_id: orion
   messaging:
     service_id: slack
+  pagerduty:
+    service_id: pagerduty
   insights:
     service_id: draservicebroker  
     parameters:
@@ -94,7 +97,6 @@ services:
       name: Tools, Practices, Courses
       dashboard_url: https://whitewater.ibm.com/
       description: Equip product and service teams with practical resources so they can get to better outcomes, faster.
-      additional-properties:
   servicecontract:
     service_id: customtool
     parameters:
@@ -106,7 +108,6 @@ services:
       dashboard_url: https://pages.github.ibm.com/the-playbook/index.html
       description: 
         $ref: "#/messages/sc.toolDescription"
-      additional-properties:
 form:
   pipeline:
     parameters:
@@ -117,7 +118,18 @@ form:
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
     schema:
       $ref: deploy.json
-  customtool:
+  customtool_bailey:
+    parameters:
+      type: Bailey
+      name: Bailey
+      lifecyclePhase: "MANAGE"
+      dashboard_url: https://w3bailey.isie.ibmcloud.com/
+      imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
+      documentationUrl: https://w3bailey.isie.ibmcloud.com/help
+      baileyUrl: https://w3bailey.isie.ibmcloud.com
+    schema:
+      $ref: bailey.json
+  customtool_manifest-clone:
     parameters:
       type: Manifest Runtime Libraries
       name: Manifest Runtime Libraries
@@ -125,8 +137,6 @@ form:
       imageUrl: https://www.ibm.com/design/assets/language/resources/icon-library/icons/svg/object-based/bee_64.svg
       documentationUrl: https://pages.github.ibm.com/CloudEngineering/service_contract/
       manifest-service-name: '{{toolchain.name}}'
-      manifest-pager-duty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
-      manifest-bailey-url: https://w3bailey.isie.ibmcloud.com/
-      manifest-bailey-project: '{{toolchain.name}}'    
+      manifest-pagerduty: 'https://bluemix.pagerduty.com/escalation_policies#ABCDEF'
     schema:
       $ref: manifest.json
